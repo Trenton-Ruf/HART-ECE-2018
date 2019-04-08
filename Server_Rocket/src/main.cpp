@@ -11,7 +11,6 @@ bool print_main = true;
 dataPoint data_telemetry;
 gpsData data_gps;
 basic time_code;
-  
 
 RH_RF69 rf69(RFM69_CS, RFM69_INT); // instantiate radio driver
 RHReliableDatagram manager(rf69, SERVER_ADDRESS); //manages delivery and recipt
@@ -53,17 +52,19 @@ void loop() {
     //recvfromack
     if (manager.recvfrom(rx_buf, &len, &from)) {
       memcpy(&time_code, rx_buf, sizeof(time_code));// dont need this step if only sending over serial, if no onboard computation
+      Serial.print("time: ");
+      Serial.println(time_code.time);
+      Serial.print("code: ");
+      Serial.println(time_code.code);
 
       if(!(time_code.code & (1 << 0))){ // if reading dataPoint
-        memcpy(&data_telemetry, rx_buf + 4, sizeof(data_telemetry)); // don't need if only sending on serial
+        memcpy(&data_telemetry, &rx_buf[sizeof(time_code)], sizeof(data_telemetry)); // don't need if only sending on serial
        Serial.print("temperature : ");
        Serial.println(data_telemetry.tmp);     
       }
       else{ // if reading gpsData
-        memcpy(&data_gps, rx_buf + 4, sizeof(data_gps)); // don't need if only sending on serial
+        memcpy(&data_gps, &rx_buf[sizeof(time_code)], sizeof(data_gps)); // don't need if only sending on serial
       }
-
-
 
       //Serial.write(rx_buf,60); //write to Serial without parsing
 
