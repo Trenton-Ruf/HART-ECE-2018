@@ -64,12 +64,8 @@ void set_mincount(int fd, int mcount)
         printf("Error tcsetattr: %s\n", strerror(errno));
 }
 
-
-int gather_telemetry(struct basic time_code, struct dataPoint data_telemetry, struct gpsData data_gps)
-{
-    char *portname = "/dev/ttyS11"; //Trenton's Desktop       // Trenton's Laptop "/dev/ttyACM0";
+int setup_serial(char * portname){
     int fd;
-    int wlen;
 
     fd = open(portname, O_RDWR | O_NOCTTY | O_SYNC);  
     if (fd < 0) {
@@ -78,20 +74,14 @@ int gather_telemetry(struct basic time_code, struct dataPoint data_telemetry, st
     }
     /*baudrate 115200, 8 bits, no parity, 1 stop bit */
     set_interface_attribs(fd, B115200);
+    return fd;
     //set_mincount(fd, 0);                /* set to pure timed read */
+}
 
 
-/*
-    // simple output 
-    wlen = write(fd, "Hello!\n", 7);
-    if (wlen != 7) {
-        printf("Error from write: %d, %d\n", wlen, errno);
-    }
-    tcdrain(fd);    // delay for output 
-*/
-
-
-
+int gather_telemetry(int fd, struct basic time_code, struct dataPoint data_telemetry, struct gpsData data_gps)
+{
+ 
     unsigned char buf[60];
     int rdlen;
 
@@ -125,8 +115,11 @@ int gather_telemetry(struct basic time_code, struct dataPoint data_telemetry, st
         printf("Error from read: %d: %s\n", rdlen, strerror(errno));
         return -1;
     } 
-    else {  /* rdlen == 0 */
+    
+   
+    else {   //rdlen == 0 
         printf("Timeout from read\n");
         return -1;
-    }              
+    }
+              
 }

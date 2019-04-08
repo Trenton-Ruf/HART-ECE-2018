@@ -50,7 +50,7 @@ struct basic{
   // code for code //
   ///////////////////
 
-  // bit 0 -> dataPoint -> 1 Data
+  // bit 0 -> 0 if dataPoint, 1 if dataGPS
   // bit 1 -> 0 -> no gps fix
   // bit 2 -> Address -> 0 if booster, 1 if sustainer
   // bit 3 -> event 0 -> 1 if launch happened
@@ -68,5 +68,6 @@ struct basic{
 
 int set_interface_attribs(int fd, int speed);
 void set_mincount(int fd, int mcount);
-int gather_telemetry(struct basic time_code, struct dataPoint data_telemetry, struct gpsData data_gps);
+int setup_serial(char* portname); //returns file descriptor, -1 if error
+int gather_telemetry(int fd, struct basic time_code, struct dataPoint data_telemetry, struct gpsData data_gps);
 
