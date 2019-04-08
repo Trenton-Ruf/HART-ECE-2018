@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-#include "feather_serial_telemetry.h"
+#include "serial_telemetry.h"
 
 // Serial code based off of 
 // https://stackoverflow.com/questions/6947413/how-to-open-read-and-write-from-serial-port-in-c
