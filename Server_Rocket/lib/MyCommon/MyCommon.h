@@ -9,16 +9,14 @@ struct gpsData{
   float speed;
   float angle;
   float altitude;
-  int misc;
+  byte misc;
 
   ///////////////////
   // code for misc //
   ///////////////////
 
-  // bit 0 -> 0 no GPS fix -> 1 GPS fix
   // bit 1 -> lat
   // bit 2 -> lon
-  // bit 3 -> Power Saving State
 
 };
 

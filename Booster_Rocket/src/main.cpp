@@ -102,7 +102,8 @@ void setup() {
 void loop() {
   // mini state machine
 
-
+  Serial.print("code");
+  Serial.println(time_code.code);
 
   ///////////////////////////
   // Gather Telemetry Data //
@@ -121,7 +122,8 @@ void loop() {
 
     size_tx = sizeof(time_code) + sizeof(data_gps);
     memcpy(tx_buf, &time_code, sizeof(time_code));
-    memcpy(tx_buf + 4, &data_gps, sizeof(data_gps) );
+    memcpy(&tx_buf[sizeof(time_code)], &data_gps, sizeof(data_gps) );
+    time_code.code |= 1 << 0; 
   }
 
   else{
@@ -135,8 +137,10 @@ void loop() {
 
     size_tx = sizeof(time_code) + sizeof(data_telemetry);
     memcpy(tx_buf, &time_code, sizeof(time_code));
-    memcpy(tx_buf + 4, &data_gps, sizeof(data_gps) );
+    memcpy(&tx_buf[sizeof(time_code)], &data_telemetry, sizeof(data_telemetry) );
+    time_code.code &= ~(1 << 0);
   }
+
 
   ///////////////
   // Send Data //
