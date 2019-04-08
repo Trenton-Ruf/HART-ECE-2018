@@ -69,5 +69,5 @@ struct basic{
 int set_interface_attribs(int fd, int speed);
 void set_mincount(int fd, int mcount);
 int setup_serial(char* portname); //returns file descriptor, -1 if error
-int gather_telemetry(int fd, struct basic time_code, struct dataPoint data_telemetry, struct gpsData data_gps);
+int gather_telemetry(int fd, struct basic *time_code, struct dataPoint *data_telemetry, struct gpsData *data_gps);
 

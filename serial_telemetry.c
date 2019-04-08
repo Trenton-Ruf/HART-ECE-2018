@@ -79,47 +79,33 @@ int setup_serial(char * portname){
 }
 
 
-int gather_telemetry(int fd, struct basic time_code, struct dataPoint data_telemetry, struct gpsData data_gps)
+int gather_telemetry(int fd, struct basic * time_code, struct dataPoint * data_telemetry, struct gpsData * data_gps)
 {
- 
     unsigned char buf[60];
     int rdlen;
 
     rdlen = read(fd, buf, sizeof(buf)); //originally was rdlen = read(fd, buf, sizeof(buf)-1);
     if (rdlen > 0) {
         //usleep(1000);
-        memcpy(&time_code, buf, sizeof(time_code)); // copy first part of buffer to "basic" struct
+        memcpy(time_code, buf, sizeof(*time_code)); // copy first part of buffer to "basic" struct
         
-        printf("time: %i\n", time_code.time);
-        printf("code: %i\n", time_code.code);
 
-        if(!(time_code.code & (1 << 0))){ // if reading dataPoint
-            memcpy(&data_telemetry, &buf[sizeof(time_code)], sizeof(data_telemetry)); // copy second part to "dataPoint" struct
+        if(!(time_code->code & (1 << 0))){ // if reading dataPoint
+            memcpy(data_telemetry, &buf[sizeof(*time_code)], sizeof(*data_telemetry)); // copy second part to "dataPoint" struct
             return 0;
         }
 
         else{ // if reading gpsData
-            memcpy(&data_gps, &buf[sizeof(time_code)], sizeof(data_gps)); // copy second part of buf to gpsData struct
+            memcpy(data_gps, &buf[sizeof(*time_code)], sizeof(*data_gps)); // copy second part of buf to gpsData struct
             return 1;
         }
-
-        
-        //printf("latitude : %f\n", data_telemetry.gps.latitude);
-        //printf("longitude : %f\n", data_telemetry.gps.longitude);
-        printf("acc_x : %f\n", data_telemetry.acc.x);
-        printf("pressure : %f\n", data_telemetry.prs);
-        printf("temperature : %f\n", data_telemetry.tmp);
-        //tcdrain(fd);    // delay for output 
     } 
     else if (rdlen < 0) {
         printf("Error from read: %d: %s\n", rdlen, strerror(errno));
         return -1;
     } 
-    
-   
     else {   //rdlen == 0 
         printf("Timeout from read\n");
         return -1;
     }
-              
 }

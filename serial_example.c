@@ -24,10 +24,13 @@ int main(){
 
     while(1){ 
 
-        gps_or_sensors = gather_telemetry(fd,time_code,data_telemetry,data_gps);
+        gps_or_sensors = gather_telemetry(fd,&time_code,&data_telemetry,&data_gps);
         if(gps_or_sensors == 0){
             // time_code and data_telemetry was updated
             // do stuff
+            printf("acc_x : %f\n", data_telemetry.acc.x);
+            printf("pressure : %f\n", data_telemetry.prs);
+            printf("temperature : %f\n", data_telemetry.tmp);
         }
         else if(gps_or_sensors == 1){
             // time_code and data_gps was updated
@@ -36,7 +39,9 @@ int main(){
         else{ // if gather_telemetry failed
             return -1;
         }
-
+        printf("time: %i\n", time_code.time);
+        printf("code: %i\n", time_code.code);
+        
     }
 
     return 0;
