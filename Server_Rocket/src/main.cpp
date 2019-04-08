@@ -80,3 +80,4 @@ void loop() {
 
 //altitude = 44330 * (1.0 - pow((pressure / 100) / 1013.25, 0.1903));
 //https://www.scadacore.com/tools/rf-path/rf-line-of-sight/
+//cntl+alt+p  select default shell
