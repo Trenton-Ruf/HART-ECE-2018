@@ -9,8 +9,8 @@
 
 
 
-#ifndef FEATHER_SERIAL_TELEMETRY_H
-#define FEATHER_SERIAL_TELEMETRY_H
+#ifndef SERIAL_TELEMETRY_H
+#define SERIAL_TELEMETRY_H
 
 
 struct gpsData{
