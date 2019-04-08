@@ -122,6 +122,7 @@ void loop() {
     size_tx = sizeof(time_code) + sizeof(data_gps);
     memcpy(tx_buf, &time_code, sizeof(time_code));
     memcpy(tx_buf + 4, &data_gps, sizeof(data_gps) );
+    time_code.code |= 1 << 0; 
   }
 
   else{
@@ -136,9 +137,9 @@ void loop() {
     size_tx = sizeof(time_code) + sizeof(data_telemetry);
     memcpy(tx_buf, &time_code, sizeof(time_code));
     memcpy(tx_buf + 4, &data_telemetry, sizeof(data_telemetry) );
+    time_code.code &= ~(1 << 0);
   }
 
-  //TESTING WHAT THE FUCK
 
   ///////////////
   // Send Data //

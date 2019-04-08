@@ -213,7 +213,7 @@ int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_co
       }
     }
     else{
-      time_code->code &= ~(1 << 0);
+      time_code->code &= ~(1 << 1);
       if(sensor_print){
         Serial.println("\nNo GPS Fix");
         //delay(900);

@@ -34,7 +34,7 @@ void setup() {
 
   if(print_main){
     Serial.println();
-    Serial.println("Radio Gournd Station test");
+    Serial.println("Radio Ground Station test");
     Serial.println();
   }
 
@@ -54,16 +54,20 @@ void loop() {
     if (manager.recvfrom(rx_buf, &len, &from)) {
       memcpy(&time_code, rx_buf, sizeof(time_code));// dont need this step if only sending over serial, if no onboard computation
 
-      if(time_code.code & (1 << 0)){ // if reading dataPoint
+      if(!(time_code.code & (1 << 0))){ // if reading dataPoint
         memcpy(&data_telemetry, rx_buf + 4, sizeof(data_telemetry)); // don't need if only sending on serial
+       Serial.print("temperature : ");
+       Serial.println(data_telemetry.tmp);     
       }
       else{ // if reading gpsData
         memcpy(&data_gps, rx_buf + 4, sizeof(data_gps)); // don't need if only sending on serial
       }
 
-      Serial.write(rx_buf,60); //write to Serial without parsing
 
-     // Serial.print("temperature : ");
+
+      //Serial.write(rx_buf,60); //write to Serial without parsing
+
+      // Serial.print("temperature : ");
       // Serial.println(telemetry->tmp);     
     }
   }
