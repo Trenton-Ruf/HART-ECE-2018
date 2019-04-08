@@ -119,7 +119,7 @@ void set_mincount(int fd, int mcount)
 
 int main()
 {
-    char *portname = "/dev/ttyACM0";
+    char *portname = "/dev/ttyS11"; //Trenton's Desktop       // Trenton's Laptop "/dev/ttyACM0";
     int fd;
     int wlen;
 
@@ -152,13 +152,17 @@ int main()
         if (rdlen > 0) {
           //usleep(1000);
           memcpy(&time_code, buf, sizeof(time_code)); // copy first part of buffer to "basic" struct
+          
+          printf("time: %i\n", time_code.time);
+          printf("code: %i\n", time_code.code);
+
             if(!(time_code.code & (1 << 0))){ // if reading dataPoint
                 memcpy(&data_telemetry, &buf[sizeof(time_code)], sizeof(data_telemetry)); // copy second part to "dataPoint" struct
                 // Return 0;
             }
 
             else{ // if reading gpsData
-                memcpy(&data_gps, &rx_buf[sizeof(time_code)], sizeof(data_gps)); // copy second part of buf to gpsData struct
+                memcpy(&data_gps, &buf[sizeof(time_code)], sizeof(data_gps)); // copy second part of buf to gpsData struct
                /// return 1;
             }
 
@@ -172,9 +176,11 @@ int main()
         } 
         else if (rdlen < 0) {
             printf("Error from read: %d: %s\n", rdlen, strerror(errno));
+            //return -1;
         } 
         else {  /* rdlen == 0 */
             printf("Timeout from read\n");
+            //return -1;
         }              
         /* repeat read to get full message */
     } while (1);

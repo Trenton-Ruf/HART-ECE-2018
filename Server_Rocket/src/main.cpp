@@ -6,7 +6,7 @@
 
 //#define LAUNCH_BUTTON 6
 
-bool print_main = true;
+bool print_main = false; // set true for debugging
 
 dataPoint data_telemetry;
 gpsData data_gps;
@@ -52,27 +52,27 @@ void loop() {
     //recvfromack
     if (manager.recvfrom(rx_buf, &len, &from)) {
       memcpy(&time_code, rx_buf, sizeof(time_code));// dont need this step if only sending over serial, if no onboard computation
-      Serial.print("time: ");
-      Serial.println(time_code.time);
-      Serial.print("code: ");
-      Serial.println(time_code.code);
-
+      if(print_main){
+        Serial.print("time: ");
+        Serial.println(time_code.time);
+        Serial.print("code: ");
+        Serial.println(time_code.code);
+      }
       if(!(time_code.code & (1 << 0))){ // if reading dataPoint
         memcpy(&data_telemetry, &rx_buf[sizeof(time_code)], sizeof(data_telemetry)); // don't need if only sending on serial
-       Serial.print("temperature : ");
-       Serial.println(data_telemetry.tmp);     
+       if(print_main){
+          Serial.print("temperature : ");
+          Serial.println(data_telemetry.tmp);     
+        }
       }
       else{ // if reading gpsData
         memcpy(&data_gps, &rx_buf[sizeof(time_code)], sizeof(data_gps)); // don't need if only sending on serial
       }
 
-      //Serial.write(rx_buf,60); //write to Serial without parsing
+      Serial.write(rx_buf,60); //write to Serial without parsing
 
-      // Serial.print("temperature : ");
-      // Serial.println(telemetry->tmp);     
     }
   }
-
 }
 
 
