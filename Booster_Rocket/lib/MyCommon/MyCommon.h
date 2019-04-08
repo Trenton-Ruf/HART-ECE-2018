@@ -9,7 +9,7 @@ struct gpsData{
   float speed;
   float angle;
   float altitude;
-  char misc;
+  byte misc;
 
   ///////////////////
   // code for misc //
