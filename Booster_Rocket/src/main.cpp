@@ -11,13 +11,9 @@
 ///////////////
 
 /*
-  Fix temperature
   change gps hz and baud 
-  Change SD code to my own.
-  Change Radio protocol to be more like UDP instead of TCP.
   Maanually change registers using SAMD21 stuff.
   Change encryption key to be non-default
-  change recieve_launch(); to be more power efficient (implementing radio sleep)
 */
 
 bool main_print = false; // true print to USB Serial
