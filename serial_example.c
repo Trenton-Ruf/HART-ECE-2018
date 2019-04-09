@@ -10,6 +10,8 @@ int main(){
     // Setup Serial //
     //////////////////
 
+    // git test
+
     int gps_or_sensors;
     char *portname = "/dev/ttyS11"; //Trenton's Desktop       // Trenton's Laptop "/dev/ttyACM0";
 
