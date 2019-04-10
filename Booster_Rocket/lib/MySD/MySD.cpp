@@ -49,29 +49,60 @@ char * setup_sd(File *logfile){
 
 }
 
-void log_data(File * logfile, char * filename, struct dataPoint *telemetry, int *flushtime){
+void log_dataPoint(File * logfile, char * filename, dataPoint * store_dataPoint, int *flushtime){
 
-  *flushtime += 1;
+  *flushtime += 32; // Add number of bytes of dataPoint to flushtime
+    if(*flushtime > 512){ // flush stores 512 bytes. dataPoint struct is 60 bytes. 512/60=8.53
+      logfile->flush();  
+      *flushtime = 32;
+    }
   //logfile = SD.open(filename, O_CREAT | O_WRITE | O_APPEND );
   if( ! *logfile ) {
-    Serial.print("Couldnt create "); 
+    Serial.print("Couldnt open "); 
     Serial.println(filename);
   }
   else{
-   // struct datastore mydata;
-   // strcpy (mydata.stringlol,data);
-
-    //logfile.print(data);
-
-    logfile->write((const uint8_t *)telemetry, sizeof(*telemetry));
-    if(*flushtime == 8){ // flush stores 512 bytes. dataPoint struct is 60 bytes. 512/60=8.53
-      logfile->flush();  
-      *flushtime = 0;
-    }
-    //logfile.close();
+    logfile->write((const uint8_t *)store_dataPoint, sizeof(*store_dataPoint));
   }
-  
+    //logfile.close();
 }
+void log_gpsData(File * logfile, char * filename, gpsData * store_gpsData, int *flushtime){
+
+  *flushtime += 21; // Add number of bytes of gpsData to flushtime
+    if(*flushtime > 512){ // flush stores 512 bytes. gpsData struct is 60 bytes. 512/60=8.53
+      logfile->flush();  
+      *flushtime = 21;
+    }
+  //logfile = SD.open(filename, O_CREAT | O_WRITE | O_APPEND );
+  if( ! *logfile ) {
+    Serial.print("Couldnt open "); 
+    Serial.println(filename);
+  }
+  else{
+    logfile->write((const uint8_t *)store_gpsData, sizeof(*store_gpsData));
+  }
+    //logfile.close();
+}
+
+void log_basic(File * logfile, char * filename, basic * store_basic, int *flushtime){
+
+  *flushtime += 4; // Add number of bytes of dataPoint to flushtime
+    if(*flushtime > 512){ // flush stores 512 bytes. dataPoint struct is 60 bytes. 512/60=8.53
+      logfile->flush();  
+      *flushtime = 4;
+    }
+  //logfile = SD.open(filename, O_CREAT | O_WRITE | O_APPEND );
+  if( ! *logfile ) {
+    Serial.print("Couldnt open "); 
+    Serial.println(filename);
+  }
+  else{
+    logfile->write((const uint8_t *)store_basic, sizeof(*store_basic));
+  }
+    //logfile.close();
+}
+
+
 /*
 void read_data_to_Serial(){
 

@@ -8,6 +8,8 @@
 
 char * setup_sd(File *logfile);
 
-void log_data(File * logfile, char * filename, struct dataPoint *telemetry, int *flushtime);
+void log_dataPoint(File * logfile, char * filename, dataPoint* store_dataPoint, int *flushtime);
+void log_gpsData(File * logfile, char * filename,  gpsData * store_dataGPS, int *flushtime);
+void log_basic(File * logfile, char * filename,  basic * store_basic, int *flushtime);
 
-void read_data();
+//void read_data(); // In case couldn't get access to sd card

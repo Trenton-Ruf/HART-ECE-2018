@@ -9,14 +9,14 @@ struct gpsData{
   float speed;
   float angle;
   float altitude;
-  byte misc;
+  char misc;
 
   ///////////////////
   // code for misc //
   ///////////////////
 
-  // bit 0 -> lat
-  // bit 1 -> lon
+  // bit 0 -> lat -> 0 if North, 1 if South
+  // bit 1 -> lon -> 0 if East, 1 if West
 
 };
 
