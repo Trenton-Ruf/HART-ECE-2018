@@ -4,7 +4,6 @@
 
 
 
-//#define LAUNCH_BUTTON 6
 
 bool print_main = false; // set true for debugging
 
@@ -17,7 +16,6 @@ RHReliableDatagram manager(rf69, SERVER_ADDRESS); //manages delivery and recipt
 
 
 void setup() {
-  // put your setup code here, to run once:
 
   //pinMode(LAUNCH_BUTTON, INPUT);
   pinMode(LED_R, OUTPUT);
@@ -41,8 +39,6 @@ void setup() {
 
 void loop() {
 
- //recieveTelemetry(&rf69,&manager, &data_telemetry); //revieves and sends over usb serial
-
   byte rx_buf[60] = {0};
 
   if (manager.available()){
@@ -62,8 +58,17 @@ void loop() {
         memcpy(&data_telemetry, &rx_buf[sizeof(time_code)], sizeof(data_telemetry)); // don't need if only sending on serial
        if(print_main){
           Serial.print("temperature : ");
-          Serial.println(data_telemetry.tmp);     
+          Serial.println(data_telemetry.tmp);
         }
+        if((time_code.code & (1 << 2))){ // if sustainer
+          if((time_code.code & (1 << 1))){ // if GPS has fix
+            //Turn on an LED
+          }
+        }
+        else{ // if Booster has GPS fix
+          //Turn on different LED
+        }
+       
       }
       else{ // if reading gpsData
         memcpy(&data_gps, &rx_buf[sizeof(time_code)], sizeof(data_gps)); // don't need if only sending on serial
