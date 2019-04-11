@@ -3,8 +3,6 @@
 #include <MyRadio.h>
 
 
-// Trenton waz here lmao
-
 bool print_main = false; // set true for debugging
 
 dataPoint data_telemetry;
