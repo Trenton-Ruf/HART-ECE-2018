@@ -64,13 +64,13 @@ void loop() {
           Serial.print("temperature : ");
           Serial.println(data_telemetry.tmp);
         }
-        if((time_code.code & (1 << 2))){ // if sustainer
-          if((time_code.code & (1 << 1))){ // if GPS has fix
+        if((time_code.code & (1 << 1))){ // if GPS has fix
+          if((time_code.code & (1 << 2))){ // if sustainer
             //Turn on an LED
             REG_PORT_OUTSET0= LED_R; 
           }
         }
-        else{ // if Booster has GPS fix
+        else{ // if Booster 
           //Turn on different LED
           REG_PORT_OUTSET0= LED_G; 
         }
