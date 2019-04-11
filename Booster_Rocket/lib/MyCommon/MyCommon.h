@@ -54,8 +54,8 @@ struct basic{
   // bool mybit = ((code >> 3)  & 0x01) //stores bit 3 of "code" in mybit
 };
 
-#define LED_R         13 //Red LED
-#define LED_G         8 //Green LED
+#define LED_R         PORT_PA17 //Red   LED Pin 13
+#define LED_G         PORT_PA06 //Green LED Pin 8
 
 void error_blink(int pattern, int LED);
 

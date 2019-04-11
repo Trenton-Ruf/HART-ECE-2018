@@ -32,13 +32,15 @@ int size_tx;
 
 void setup() {
 
-  //Set Led's to outputs (change to direct registry manipulations later)
-  pinMode(LED_R, OUTPUT);
-  digitalWrite(LED_R, LOW);
-  pinMode(LED_G, OUTPUT);
-  digitalWrite(LED_G, LOW);
+  //Setup LED's
+  REG_PORT_DIR0 |= LED_R;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
+  REG_PORT_OUTCLR0= LED_R; // Set port low
 
-  //PORT->Group[0].DIR.reg |= PORT_PA17; 
+  REG_PORT_DIR0 |= LED_G;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA06;" also works
+  REG_PORT_OUTCLR0= LED_G; // Set port low
+
+  //  Group[0] is port A
+  //  Group[1] is port B
 
   // Set up serial monitor (comment out while loop if not using USB or it will stall here)
   Serial.begin(115200); //serial USB

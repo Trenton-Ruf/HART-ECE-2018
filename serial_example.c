@@ -35,6 +35,8 @@ int main(){
         else if(gps_or_sensors == 1){
             // time_code and data_gps was updated
             //do other stuff
+            printf("latitude : %f\n", data_gps.latitude);
+            printf("longitude : %f\n", data_gps.longitude);
         }
         else{ // if gather_telemetry failed
             return -1;

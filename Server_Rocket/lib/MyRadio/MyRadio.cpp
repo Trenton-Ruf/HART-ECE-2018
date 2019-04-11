@@ -32,7 +32,7 @@ void  setup_radio(RH_RF69 *rf69,  RHReliableDatagram *manager ,int ADDRESS){
     //error_blink(2);
   }
 
-  rf69->setTxPower(14, true); //14 is lowest power, 20 is highest
+  rf69->setTxPower(20, true); //14 is lowest power, 20 is highest
 
 
   uint8_t key[] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,

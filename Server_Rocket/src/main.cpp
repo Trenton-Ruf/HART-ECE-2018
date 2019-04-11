@@ -17,11 +17,15 @@ RHReliableDatagram manager(rf69, SERVER_ADDRESS); //manages delivery and recipt
 
 void setup() {
 
-  //pinMode(LAUNCH_BUTTON, INPUT);
-  pinMode(LED_R, OUTPUT);
-  digitalWrite(LED_R, LOW);
-  pinMode(LED_G, OUTPUT);
-  digitalWrite(LED_G, LOW);
+  //Setup LED's
+  REG_PORT_DIR0 |= LED_R;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
+  REG_PORT_OUTCLR0= LED_R; // Set port low
+
+  REG_PORT_DIR0 |= LED_G;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA06;" also works
+  REG_PORT_OUTCLR0= LED_G; // Set port low
+
+  //  Group[0] is port A
+  //  Group[1] is port B
 
   // Set up serial monitor (comment out if not using USB or it will stall here)
   Serial.begin(115200);
@@ -63,10 +67,12 @@ void loop() {
         if((time_code.code & (1 << 2))){ // if sustainer
           if((time_code.code & (1 << 1))){ // if GPS has fix
             //Turn on an LED
+            REG_PORT_OUTSET0= LED_R; 
           }
         }
         else{ // if Booster has GPS fix
           //Turn on different LED
+          REG_PORT_OUTSET0= LED_G; 
         }
        
       }
