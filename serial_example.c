@@ -11,7 +11,7 @@ int main(){
     //////////////////
 
     int gps_or_sensors;
-    char *portname = "/dev/ttyS11"; //Trenton's Desktop       // Trenton's Laptop "/dev/ttyACM0";
+    char *portname =  "/dev/ttyACM0";     // Trenton's Laptop  "/dev/ttyS11"; //Trenton's Desktop 
 
     int fd = setup_serial(portname);
 

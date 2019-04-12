@@ -1,0 +1,1174 @@
+acc_x : 0.114950
+pressure : 101058.320312
+temperature : 21.721018
+time: 435814
+code: 2
+acc_x : 0.000000
+pressure : 101054.898438
+temperature : 21.721876
+time: 435849
+code: 2
+acc_x : 0.000000
+pressure : 101059.546875
+temperature : 21.726696
+time: 435884
+code: 2
+latitude : 0.000000
+longitude : 12316.555664
+time: 435919
+code: 3
+acc_x : 0.114950
+pressure : 101051.578125
+temperature : 21.556160
+time: 436420
+code: 2
+acc_x : 0.000000
+pressure : 101049.562500
+temperature : 21.565535
+time: 436455
+code: 2
+acc_x : 0.000000
+pressure : 101053.882812
+temperature : 21.573656
+time: 436489
+code: 2
+acc_x : 0.114950
+pressure : 101050.515625
+temperature : 21.579796
+time: 436534
+code: 2
+acc_x : -0.229899
+pressure : 101054.101562
+temperature : 21.587719
+time: 436569
+code: 2
+acc_x : -0.229899
+pressure : 101052.664062
+temperature : 21.597292
+time: 436604
+code: 2
+acc_x : 0.000000
+pressure : 101054.812500
+temperature : 21.606997
+time: 436639
+code: 2
+acc_x : -0.229899
+pressure : 101052.140625
+temperature : 21.614523
+time: 436673
+code: 2
+acc_x : 0.000000
+pressure : 101050.742188
+temperature : 21.619871
+time: 436708
+code: 2
+acc_x : 0.000000
+pressure : 101054.992188
+temperature : 21.624954
+time: 436742
+code: 2
+acc_x : 0.114950
+pressure : 101054.406250
+temperature : 21.625418
+time: 436811
+code: 2
+acc_x : 0.114950
+pressure : 101057.000000
+temperature : 21.630369
+time: 436846
+code: 2
+acc_x : 0.344849
+pressure : 101057.140625
+temperature : 21.637367
+time: 436881
+code: 2
+acc_x : -0.114950
+pressure : 101057.093750
+temperature : 21.643244
+time: 436916
+code: 2
+acc_x : 0.000000
+pressure : 101054.992188
+temperature : 21.645159
+time: 436951
+code: 2
+acc_x : 0.000000
+pressure : 101057.640625
+temperature : 21.651693
+time: 436985
+code: 2
+acc_x : 0.000000
+pressure : 101054.406250
+temperature : 21.654402
+time: 437020
+code: 2
+acc_x : -0.114950
+pressure : 101050.929688
+temperature : 21.660080
+time: 437055
+code: 2
+acc_x : 0.000000
+pressure : 101053.210938
+temperature : 21.666351
+time: 437090
+code: 2
+acc_x : -0.229899
+pressure : 101056.914062
+temperature : 21.666021
+time: 437135
+code: 2
+acc_x : 0.000000
+pressure : 101057.046875
+temperature : 21.671303
+time: 437170
+code: 2
+acc_x : 0.114950
+pressure : 101055.945312
+temperature : 21.674934
+time: 437205
+code: 2
+acc_x : 0.000000
+pressure : 101058.335938
+temperature : 21.678961
+time: 437240
+code: 2
+acc_x : 0.114950
+pressure : 101059.554688
+temperature : 21.682262
+time: 437275
+code: 2
+acc_x : 0.114950
+pressure : 101055.164062
+temperature : 21.687016
+time: 437310
+code: 2
+acc_x : 0.229899
+pressure : 101054.414062
+temperature : 21.689459
+time: 437345
+code: 2
+acc_x : 0.114950
+pressure : 101054.750000
+temperature : 21.693289
+time: 437380
+code: 2
+acc_x : 0.114950
+pressure : 101056.406250
+temperature : 21.692760
+time: 437415
+code: 2
+acc_x : -0.229899
+pressure : 101058.734375
+temperature : 21.699230
+time: 437450
+code: 2
+acc_x : -0.114950
+pressure : 101057.867188
+temperature : 21.699825
+time: 437485
+code: 2
+acc_x : 0.114950
+pressure : 101059.828125
+temperature : 21.688536
+time: 437554
+code: 2
+acc_x : 0.000000
+pressure : 101057.664062
+temperature : 21.693552
+time: 437589
+code: 2
+acc_x : 0.114950
+pressure : 101054.546875
+temperature : 21.694080
+time: 437623
+code: 2
+acc_x : 0.000000
+pressure : 101053.562500
+temperature : 21.697514
+time: 437658
+code: 2
+acc_x : 0.000000
+pressure : 101059.054688
+temperature : 21.700287
+time: 437693
+code: 2
+acc_x : -0.114950
+pressure : 101060.398438
+temperature : 21.696392
+time: 437738
+code: 2
+acc_x : -0.114950
+pressure : 101056.281250
+temperature : 21.699297
+time: 437773
+code: 2
+acc_x : -1.724246
+pressure : 101056.796875
+temperature : 21.701542
+time: 437808
+code: 2
+acc_x : 0.000000
+pressure : 101056.195312
+temperature : 21.703985
+time: 437843
+code: 2
+acc_x : 0.229899
+pressure : 101061.039062
+temperature : 21.707945
+time: 437877
+code: 2
+acc_x : 0.000000
+pressure : 101056.726562
+temperature : 21.709002
+time: 437912
+code: 2
+acc_x : 0.000000
+pressure : 101054.742188
+temperature : 21.712435
+time: 437947
+code: 2
+acc_x : 0.000000
+pressure : 101060.601562
+temperature : 21.714481
+time: 437982
+code: 2
+acc_x : -0.114950
+pressure : 101056.585938
+temperature : 21.716793
+time: 438017
+code: 2
+acc_x : 0.000000
+pressure : 101059.281250
+temperature : 21.718113
+time: 438052
+code: 2
+acc_x : 0.000000
+pressure : 101061.429688
+temperature : 21.719765
+time: 438087
+code: 2
+acc_x : 0.000000
+pressure : 101057.437500
+temperature : 21.723198
+time: 438122
+code: 2
+acc_x : 0.229899
+pressure : 101056.546875
+temperature : 21.722340
+time: 438157
+code: 2
+acc_x : 0.114950
+pressure : 101055.851562
+temperature : 21.725706
+time: 438191
+code: 2
+acc_x : 0.344849
+pressure : 101056.601562
+temperature : 21.726299
+time: 438226
+code: 2
+acc_x : 0.114950
+pressure : 101058.789062
+temperature : 21.713953
+time: 438295
+code: 2
+acc_x : -0.114950
+pressure : 101060.960938
+temperature : 21.710983
+time: 438340
+code: 2
+acc_x : 0.000000
+pressure : 101054.578125
+temperature : 21.711708
+time: 438375
+code: 2
+acc_x : 0.114950
+pressure : 101058.382812
+temperature : 21.714218
+time: 438410
+code: 2
+acc_x : 0.000000
+pressure : 101053.242188
+temperature : 21.713623
+time: 438445
+code: 2
+acc_x : 0.000000
+pressure : 101058.046875
+temperature : 21.717453
+time: 438480
+code: 2
+acc_x : -0.114950
+pressure : 101063.007812
+temperature : 21.718575
+time: 438515
+code: 2
+acc_x : 0.114950
+pressure : 101061.734375
+temperature : 21.720425
+time: 438550
+code: 2
+acc_x : 0.000000
+pressure : 101053.429688
+temperature : 21.719830
+time: 438585
+code: 2
+acc_x : 0.000000
+pressure : 101057.960938
+temperature : 21.722141
+time: 438619
+code: 2
+acc_x : 0.114950
+pressure : 101055.187500
+temperature : 21.726168
+time: 438654
+code: 2
+acc_x : 0.000000
+pressure : 101060.039062
+temperature : 21.723461
+time: 438689
+code: 2
+acc_x : 0.000000
+pressure : 101056.351562
+temperature : 21.727554
+time: 438724
+code: 2
+acc_x : 0.000000
+pressure : 101055.000000
+temperature : 21.729403
+time: 438759
+code: 2
+acc_x : 0.000000
+pressure : 101056.468750
+temperature : 21.731449
+time: 438794
+code: 2
+acc_x : -0.114950
+pressure : 101057.359375
+temperature : 21.733299
+time: 438828
+code: 2
+acc_x : 0.000000
+pressure : 101059.914062
+temperature : 21.733364
+time: 438863
+code: 2
+acc_x : -0.344849
+pressure : 101057.703125
+temperature : 21.729073
+time: 438908
+code: 2
+latitude : 0.000000
+longitude : 12316.555664
+time: 438943
+code: 3
+acc_x : 0.114950
+pressure : 101051.492188
+temperature : 21.557150
+time: 439444
+code: 2
+acc_x : 0.000000
+pressure : 101050.687500
+temperature : 21.558008
+time: 439513
+code: 2
+acc_x : 0.114950
+pressure : 101052.671875
+temperature : 21.565006
+time: 439548
+code: 2
+acc_x : 0.000000
+pressure : 101057.023438
+temperature : 21.575239
+time: 439583
+code: 2
+acc_x : 0.000000
+pressure : 101055.429688
+temperature : 21.583757
+time: 439617
+code: 2
+acc_x : 0.000000
+pressure : 101050.195312
+temperature : 21.592207
+time: 439652
+code: 2
+acc_x : 0.114950
+pressure : 101055.781250
+temperature : 21.597094
+time: 439686
+code: 2
+acc_x : 1.724246
+pressure : 101054.703125
+temperature : 21.607525
+time: 439721
+code: 2
+acc_x : -0.114950
+pressure : 101053.328125
+temperature : 21.613995
+time: 439756
+code: 2
+acc_x : 0.114950
+pressure : 101053.773438
+temperature : 21.621325
+time: 439791
+code: 2
+acc_x : 0.000000
+pressure : 101052.250000
+temperature : 21.628124
+time: 439826
+code: 2
+acc_x : 0.000000
+pressure : 101049.726562
+temperature : 21.636971
+time: 439861
+code: 2
+acc_x : 0.114950
+pressure : 101055.171875
+temperature : 21.642254
+time: 439896
+code: 2
+acc_x : 0.000000
+pressure : 101052.523438
+temperature : 21.649185
+time: 439931
+code: 2
+acc_x : 0.000000
+pressure : 101054.648438
+temperature : 21.649054
+time: 439976
+code: 2
+acc_x : 0.229899
+pressure : 101059.140625
+temperature : 21.654863
+time: 440011
+code: 2
+acc_x : 0.000000
+pressure : 101057.039062
+temperature : 21.659485
+time: 440046
+code: 2
+acc_x : 0.114950
+pressure : 101060.718750
+temperature : 21.664106
+time: 440081
+code: 2
+acc_x : 0.114950
+pressure : 101053.781250
+temperature : 21.667143
+time: 440116
+code: 2
+acc_x : 0.344849
+pressure : 101053.757812
+temperature : 21.672756
+time: 440151
+code: 2
+acc_x : 0.114950
+pressure : 101058.453125
+temperature : 21.677113
+time: 440186
+code: 2
+acc_x : -0.114950
+pressure : 101053.859375
+temperature : 21.667473
+time: 440255
+code: 2
+acc_x : -0.114950
+pressure : 101055.328125
+temperature : 21.671568
+time: 440290
+code: 2
+acc_x : 0.000000
+pressure : 101057.445312
+temperature : 21.675396
+time: 440325
+code: 2
+acc_x : -0.114950
+pressure : 101062.546875
+temperature : 21.678499
+time: 440360
+code: 2
+acc_x : 0.000000
+pressure : 101055.531250
+temperature : 21.682528
+time: 440395
+code: 2
+acc_x : -0.114950
+pressure : 101057.718750
+temperature : 21.684706
+time: 440430
+code: 2
+acc_x : 0.114950
+pressure : 101061.914062
+temperature : 21.691902
+time: 440500
+code: 2
+acc_x : 0.114950
+pressure : 101057.750000
+temperature : 21.694609
+time: 440535
+code: 2
+acc_x : -0.229899
+pressure : 101059.570312
+temperature : 21.694807
+time: 440580
+code: 2
+acc_x : 0.000000
+pressure : 101056.281250
+temperature : 21.696260
+time: 440615
+code: 2
+acc_x : 0.000000
+pressure : 101056.218750
+temperature : 21.699362
+time: 440650
+code: 2
+acc_x : -0.229899
+pressure : 101061.859375
+temperature : 21.702795
+time: 440685
+code: 2
+acc_x : -0.114950
+pressure : 101060.835938
+temperature : 21.701014
+time: 440720
+code: 2
+acc_x : 0.114950
+pressure : 101055.632812
+temperature : 21.706228
+time: 440755
+code: 2
+acc_x : 0.000000
+pressure : 101056.796875
+temperature : 21.708607
+time: 440790
+code: 2
+acc_x : -0.114950
+pressure : 101057.179688
+temperature : 21.711313
+time: 440825
+code: 2
+acc_x : 0.000000
+pressure : 101059.554688
+temperature : 21.711576
+time: 440860
+code: 2
+acc_x : 0.000000
+pressure : 101057.398438
+temperature : 21.714283
+time: 440895
+code: 2
+acc_x : -0.114950
+pressure : 101059.992188
+temperature : 21.716198
+time: 440930
+code: 2
+acc_x : 0.000000
+pressure : 101056.570312
+temperature : 21.702929
+time: 440999
+code: 2
+acc_x : 0.000000
+pressure : 101053.734375
+temperature : 21.703323
+time: 441034
+code: 2
+acc_x : 0.229899
+pressure : 101057.945312
+temperature : 21.703522
+time: 441068
+code: 2
+acc_x : 0.000000
+pressure : 101056.882812
+temperature : 21.709332
+time: 441103
+code: 2
+acc_x : -0.114950
+pressure : 101062.101562
+temperature : 21.711246
+time: 441138
+code: 2
+acc_x : 0.000000
+pressure : 101054.390625
+temperature : 21.707550
+time: 441183
+code: 2
+acc_x : -0.114950
+pressure : 101056.851562
+temperature : 21.709200
+time: 441218
+code: 2
+acc_x : 0.229899
+pressure : 101059.921875
+temperature : 21.711842
+time: 441253
+code: 2
+acc_x : 0.114950
+pressure : 101061.101562
+temperature : 21.713953
+time: 441288
+code: 2
+acc_x : 0.229899
+pressure : 101056.445312
+temperature : 21.713161
+time: 441323
+code: 2
+acc_x : -0.114950
+pressure : 101057.648438
+temperature : 21.716396
+time: 441358
+code: 2
+acc_x : 0.229899
+pressure : 101058.945312
+temperature : 21.720688
+time: 441393
+code: 2
+acc_x : -0.114950
+pressure : 101058.046875
+temperature : 21.721149
+time: 441428
+code: 2
+acc_x : 0.000000
+pressure : 101057.015625
+temperature : 21.724054
+time: 441463
+code: 2
+acc_x : 0.000000
+pressure : 101059.156250
+temperature : 21.723989
+time: 441498
+code: 2
+acc_x : 0.344849
+pressure : 101055.984375
+temperature : 21.725969
+time: 441533
+code: 2
+acc_x : 0.000000
+pressure : 101055.726562
+temperature : 21.725838
+time: 441568
+code: 2
+acc_x : 0.114950
+pressure : 101057.148438
+temperature : 21.727686
+time: 441603
+code: 2
+acc_x : 0.114950
+pressure : 101059.281250
+temperature : 21.726564
+time: 441638
+code: 2
+acc_x : 0.114950
+pressure : 101059.765625
+temperature : 21.729668
+time: 441673
+code: 2
+acc_x : 0.000000
+pressure : 101054.625000
+temperature : 21.716661
+time: 441742
+code: 2
+acc_x : -0.229899
+pressure : 101060.851562
+temperature : 21.713888
+time: 441787
+code: 2
+acc_x : 0.114950
+pressure : 101059.218750
+temperature : 21.716858
+time: 441822
+code: 2
+acc_x : 0.114950
+pressure : 101060.976562
+temperature : 21.714417
+time: 441857
+code: 2
+acc_x : 0.114950
+pressure : 101056.273438
+temperature : 21.717783
+time: 441892
+code: 2
+acc_x : 0.000000
+pressure : 101057.437500
+temperature : 21.718840
+time: 441927
+code: 2
+latitude : 0.000000
+longitude : 12316.555664
+time: 441962
+code: 3
+acc_x : 0.114950
+pressure : 101056.101562
+temperature : 21.553057
+time: 442463
+code: 2
+acc_x : -0.114950
+pressure : 101051.695312
+temperature : 21.559725
+time: 442498
+code: 2
+acc_x : 0.000000
+pressure : 101054.882812
+temperature : 21.567911
+time: 442533
+code: 2
+acc_x : 0.000000
+pressure : 101048.843750
+temperature : 21.577881
+time: 442568
+code: 2
+acc_x : 0.229899
+pressure : 101054.398438
+temperature : 21.588709
+time: 442603
+code: 2
+acc_x : -0.114950
+pressure : 101055.304688
+temperature : 21.593990
+time: 442638
+code: 2
+acc_x : 0.114950
+pressure : 101052.750000
+temperature : 21.599998
+time: 442673
+code: 2
+acc_x : 0.114950
+pressure : 101057.085938
+temperature : 21.608515
+time: 442708
+code: 2
+acc_x : 0.000000
+pressure : 101054.867188
+temperature : 21.619013
+time: 442743
+code: 2
+acc_x : 0.114950
+pressure : 101056.359375
+temperature : 21.623173
+time: 442777
+code: 2
+acc_x : 0.114950
+pressure : 101057.140625
+temperature : 21.626606
+time: 442822
+code: 2
+acc_x : 0.000000
+pressure : 101049.507812
+temperature : 21.634661
+time: 442857
+code: 2
+acc_x : 0.229899
+pressure : 101055.210938
+temperature : 21.640404
+time: 442892
+code: 2
+acc_x : -0.229899
+pressure : 101052.773438
+temperature : 21.634792
+time: 442961
+code: 2
+acc_x : 0.000000
+pressure : 101057.500000
+temperature : 21.638952
+time: 442996
+code: 2
+acc_x : 0.000000
+pressure : 101055.195312
+temperature : 21.640999
+time: 443031
+code: 2
+acc_x : 0.114950
+pressure : 101054.429688
+temperature : 21.647072
+time: 443066
+code: 2
+acc_x : 0.229899
+pressure : 101054.476562
+temperature : 21.652685
+time: 443101
+code: 2
+acc_x : 0.229899
+pressure : 101055.226562
+temperature : 21.658297
+time: 443136
+code: 2
+acc_x : 0.000000
+pressure : 101052.250000
+temperature : 21.660805
+time: 443171
+code: 2
+acc_x : 0.000000
+pressure : 101055.218750
+temperature : 21.666681
+time: 443206
+code: 2
+acc_x : -0.114950
+pressure : 101057.296875
+temperature : 21.670380
+time: 443241
+code: 2
+acc_x : 0.114950
+pressure : 101056.226562
+temperature : 21.675463
+time: 443276
+code: 2
+acc_x : 0.114950
+pressure : 101057.898438
+temperature : 21.679424
+time: 443311
+code: 2
+acc_x : 0.000000
+pressure : 101059.921875
+temperature : 21.681868
+time: 443346
+code: 2
+acc_x : 0.000000
+pressure : 101055.023438
+temperature : 21.685036
+time: 443381
+code: 2
+acc_x : -0.114950
+pressure : 101062.492188
+temperature : 21.683649
+time: 443426
+code: 2
+acc_x : 0.114950
+pressure : 101054.218750
+temperature : 21.685564
+time: 443461
+code: 2
+acc_x : 0.114950
+pressure : 101052.281250
+temperature : 21.690252
+time: 443496
+code: 2
+acc_x : 0.114950
+pressure : 101056.304688
+temperature : 21.691969
+time: 443531
+code: 2
+acc_x : 0.000000
+pressure : 101061.312500
+temperature : 21.694675
+time: 443566
+code: 2
+acc_x : 0.114950
+pressure : 101056.468750
+temperature : 21.699429
+time: 443601
+code: 2
+acc_x : 0.000000
+pressure : 101060.125000
+temperature : 21.701277
+time: 443636
+code: 2
+acc_x : 0.000000
+pressure : 101053.554688
+temperature : 21.691771
+time: 443704
+code: 2
+acc_x : -0.229899
+pressure : 101054.179688
+temperature : 21.691441
+time: 443739
+code: 2
+acc_x : -0.229899
+pressure : 101060.726562
+temperature : 21.695467
+time: 443774
+code: 2
+acc_x : -0.229899
+pressure : 101054.179688
+temperature : 21.697844
+time: 443809
+code: 2
+acc_x : 0.000000
+pressure : 101052.859375
+temperature : 21.699825
+time: 443844
+code: 2
+acc_x : -0.114950
+pressure : 101060.437500
+temperature : 21.703985
+time: 443878
+code: 2
+acc_x : -0.114950
+pressure : 101058.195312
+temperature : 21.702929
+time: 443913
+code: 2
+acc_x : 0.114950
+pressure : 101057.070312
+temperature : 21.705767
+time: 443948
+code: 2
+acc_x : -0.114950
+pressure : 101054.000000
+temperature : 21.708540
+time: 443983
+code: 2
+acc_x : 0.000000
+pressure : 101058.109375
+temperature : 21.703588
+time: 444028
+code: 2
+acc_x : -0.114950
+pressure : 101060.078125
+temperature : 21.708803
+time: 444063
+code: 2
+acc_x : 0.229899
+pressure : 101059.312500
+temperature : 21.710190
+time: 444098
+code: 2
+acc_x : -0.114950
+pressure : 101058.789062
+temperature : 21.709927
+time: 444133
+code: 2
+acc_x : 0.114950
+pressure : 101059.578125
+temperature : 21.714020
+time: 444168
+code: 2
+acc_x : 0.114950
+pressure : 101055.710938
+temperature : 21.713293
+time: 444203
+code: 2
+acc_x : 0.000000
+pressure : 101055.109375
+temperature : 21.716396
+time: 444238
+code: 2
+acc_x : 0.114950
+pressure : 101054.070312
+temperature : 21.714548
+time: 444273
+code: 2
+acc_x : 0.114950
+pressure : 101055.484375
+temperature : 21.718378
+time: 444308
+code: 2
+acc_x : 0.114950
+pressure : 101055.421875
+temperature : 21.718773
+time: 444343
+code: 2
+acc_x : 0.000000
+pressure : 101056.109375
+temperature : 21.722801
+time: 444378
+code: 2
+acc_x : 0.000000
+pressure : 101054.960938
+temperature : 21.709002
+time: 444447
+code: 2
+acc_x : 0.000000
+pressure : 101058.320312
+temperature : 21.711246
+time: 444482
+code: 2
+acc_x : 0.114950
+pressure : 101057.687500
+temperature : 21.709465
+time: 444517
+code: 2
+acc_x : -0.229899
+pressure : 101056.531250
+temperature : 21.712831
+time: 444552
+code: 2
+acc_x : -0.114950
+pressure : 101056.757812
+temperature : 21.713491
+time: 444587
+code: 2
+acc_x : 0.114950
+pressure : 101062.515625
+temperature : 21.711048
+time: 444632
+code: 2
+acc_x : 0.114950
+pressure : 101056.960938
+temperature : 21.713030
+time: 444667
+code: 2
+acc_x : 0.000000
+pressure : 101056.320312
+temperature : 21.714615
+time: 444702
+code: 2
+acc_x : 0.000000
+pressure : 101059.257812
+temperature : 21.716331
+time: 444737
+code: 2
+acc_x : 0.114950
+pressure : 101056.656250
+temperature : 21.718443
+time: 444772
+code: 2
+acc_x : 0.114950
+pressure : 101057.039062
+temperature : 21.718113
+time: 444807
+code: 2
+acc_x : 0.114950
+pressure : 101058.265625
+temperature : 21.720095
+time: 444842
+code: 2
+acc_x : -0.229899
+pressure : 101061.367188
+temperature : 21.722206
+time: 444877
+code: 2
+acc_x : 0.000000
+pressure : 101056.921875
+temperature : 21.723989
+time: 444912
+code: 2
+acc_x : 0.000000
+pressure : 101057.710938
+temperature : 21.723724
+time: 444947
+code: 2
+latitude : 0.000000
+longitude : 12316.555664
+time: 444982
+code: 3
+acc_x : 0.000000
+pressure : 101054.398438
+temperature : 21.552660
+time: 445483
+code: 2
+acc_x : 0.229899
+pressure : 101053.281250
+temperature : 21.561243
+time: 445518
+code: 2
+acc_x : 0.000000
+pressure : 101052.312500
+temperature : 21.569496
+time: 445553
+code: 2
+acc_x : 0.000000
+pressure : 101053.039062
+temperature : 21.577353
+time: 445588
+code: 2
+acc_x : -0.114950
+pressure : 101058.898438
+temperature : 21.579399
+time: 445657
+code: 2
+acc_x : -0.114950
+pressure : 101050.554688
+temperature : 21.584351
+time: 445702
+code: 2
+acc_x : 0.344849
+pressure : 101047.390625
+temperature : 21.589039
+time: 445737
+code: 2
+acc_x : 0.000000
+pressure : 101051.960938
+temperature : 21.596565
+time: 445772
+code: 2
+acc_x : -0.114950
+pressure : 101050.000000
+temperature : 21.607195
+time: 445807
+code: 2
+acc_x : -1.839196
+pressure : 101051.257812
+temperature : 21.612015
+time: 445842
+code: 2
+acc_x : 0.114950
+pressure : 101052.148438
+temperature : 21.619938
+time: 445877
+code: 2
+acc_x : 0.000000
+pressure : 101054.734375
+temperature : 21.627859
+time: 445912
+code: 2
+acc_x : 0.000000
+pressure : 101052.226562
+temperature : 21.633406
+time: 445946
+code: 2
+acc_x : -0.114950
+pressure : 101054.171875
+temperature : 21.638226
+time: 445980
+code: 2
+acc_x : -0.114950
+pressure : 101057.031250
+temperature : 21.643970
+time: 446015
+code: 2
+acc_x : 0.000000
+pressure : 101055.984375
+temperature : 21.649845
+time: 446050
+code: 2
+acc_x : 0.114950
+pressure : 101056.171875
+temperature : 21.656052
+time: 446084
+code: 2
+acc_x : 0.114950
+pressure : 101054.601562
+temperature : 21.659616
+time: 446119
+code: 2
+acc_x : 0.114950
+pressure : 101057.875000
+temperature : 21.661797
+time: 446154
+code: 2
+acc_x : 0.000000
+pressure : 101057.195312
+temperature : 21.667936
+time: 446189
+code: 2
+acc_x : 0.459799
+pressure : 101056.804688
+temperature : 21.669586
+time: 446224
+code: 2
+acc_x : -0.114950
+pressure : 101057.046875
+temperature : 21.660212
+time: 446303
+code: 2
+acc_x : 0.114950
+pressure : 101055.171875
+temperature : 21.662127
+time: 446338
+code: 2
+acc_x : 0.000000
+pressure : 101055.421875
+temperature : 21.665890
+time: 446373
+code: 2
+acc_x : 0.000000
+pressure : 101052.421875
+temperature : 21.656843
+time: 446446
+code: 2
+acc_x : 0.114950
+pressure : 101053.304688
+temperature : 21.660343
+time: 446481
+code: 2
+acc_x : 0.344849
+pressure : 101053.593750
+temperature : 21.663645

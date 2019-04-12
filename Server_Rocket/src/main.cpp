@@ -56,26 +56,35 @@ void loop() {
         Serial.print("code: ");
         Serial.println(time_code.code);
       }
+      if((time_code.code & (1 << 1))){ // if GPS has fix
+        if((time_code.code & (1 << 2))){ // if sustainer
+          //Turn on an LED
+          REG_PORT_OUTSET0= LED_R; 
+        } 
+        else{ // if Booster 
+        //Turn on different LED
+        REG_PORT_OUTSET0= LED_G; 
+        }
+      }
       if(!(time_code.code & (1 << 0))){ // if reading dataPoint
         memcpy(&data_telemetry, &rx_buf[sizeof(time_code)], sizeof(data_telemetry)); // don't need if only sending on serial
        if(print_main){
           Serial.print("temperature : ");
           Serial.println(data_telemetry.tmp);
+          Serial.print("pressure : ");
+          Serial.println(data_telemetry.prs);
         }
-        if((time_code.code & (1 << 1))){ // if GPS has fix
-          if((time_code.code & (1 << 2))){ // if sustainer
-            //Turn on an LED
-            REG_PORT_OUTSET0= LED_R; 
-          }
-        }
-        else{ // if Booster 
-          //Turn on different LED
-          REG_PORT_OUTSET0= LED_G; 
-        }
+
        
       }
       else{ // if reading gpsData
         memcpy(&data_gps, &rx_buf[sizeof(time_code)], sizeof(data_gps)); // don't need if only sending on serial
+        if(print_main){
+          Serial.print("Latitude: ");
+          Serial.println(data_gps.latitude);
+          Serial.print("Longitude: ");
+          Serial.println(data_gps.longitude);
+        }
       }
 
       Serial.write(rx_buf,60); //write to Serial without parsing

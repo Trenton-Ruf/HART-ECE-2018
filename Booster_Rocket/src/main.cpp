@@ -92,10 +92,10 @@ void loop() {
   //   Gather GPS Data   //
   /////////////////////////
   if (gather_gps(&GPS, &data_gps,&time_code)){ // if return 1 send gps data
+  time_code.code |= 1 << 0;
   size_tx = sizeof(time_code) + sizeof(data_gps);
   memcpy(tx_buf, &time_code, sizeof(time_code));
   memcpy(&tx_buf[sizeof(time_code)], &data_gps, sizeof(data_gps) );
-  time_code.code |= 1 << 0;
 
   /// Log Time and Gps Data //
   log_basic(&logfile, filename,&time_code,&flushtime);
@@ -111,10 +111,10 @@ void loop() {
     gather_gyroscope(&data_telemetry);
     gather_barometer(&data_telemetry);
 
+    time_code.code &= ~(1 << 0);
     size_tx = sizeof(time_code) + sizeof(data_telemetry);
     memcpy(tx_buf, &time_code, sizeof(time_code));
     memcpy(&tx_buf[sizeof(time_code)], &data_telemetry, sizeof(data_telemetry) );
-    time_code.code &= ~(1 << 0);
 
     /// Log Time and Sensor Data //
     log_basic(&logfile, filename,&time_code,&flushtime);
@@ -125,7 +125,7 @@ void loop() {
   // Send Data over Radio //
   //////////////////////////
   
-  manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
+ manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
 
 }
 
