@@ -161,7 +161,7 @@ void gather_barometer(struct dataPoint *telemetry) {
 
 //#define GPSECHO true // Set true to echo gps data to USB serial
 uint32_t gps_timer = millis(); 
-uint32_t gps_time_interval = 2000; // updates gps every 2 seconds 
+uint32_t gps_time_interval = 3000; // updates gps every 2 seconds 
 
 void setup_gps(Adafruit_GPS * GPS){
 
@@ -173,7 +173,6 @@ void setup_gps(Adafruit_GPS * GPS){
 } 
 
 int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_code){
-  // do this whole thing only once and a while, write an if statement for time
   GPS->read();
 
   if (GPS->newNMEAreceived()) {
@@ -186,7 +185,7 @@ int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_co
 
   if(millis() - gps_timer > gps_time_interval ){
     gps_timer = millis();
-    if (GPS->fix) {
+    if (GPS->fix>0) {
       gpsdata->latitude=GPS->latitude;
       gpsdata->longitude=GPS->longitude;
       //gpsdata->lon=GPS->lon;
@@ -207,7 +206,7 @@ int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_co
         Serial.print("GPS Speed: ");  Serial.println(gpsdata->speed);
         Serial.print("GPS Angle: "); Serial.println(gpsdata->angle);
         Serial.print("GPS Altitude: "); Serial.println(gpsdata->altitude);
-        //delay(900);
+        delay(500);
 
         return 1;
       }
@@ -216,7 +215,7 @@ int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_co
       time_code->code &= ~(1 << 1);
       if(sensor_print){
         Serial.println("\nNo GPS Fix");
-        //delay(900);
+        delay(500);
       }
     }
   } 
