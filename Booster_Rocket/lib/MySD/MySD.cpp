@@ -51,10 +51,10 @@ char * setup_sd(File *logfile){
 
 void log_dataPoint(File * logfile, char * filename, dataPoint * store_dataPoint, int *flushtime){
 
-  *flushtime += 32; // Add number of bytes of dataPoint to flushtime
+  *flushtime += sizeof(dataPoint); // Add number of bytes of dataPoint to flushtime
     if(*flushtime > 512){ // flush stores 512 bytes. dataPoint struct is 60 bytes. 512/60=8.53
       logfile->flush();  
-      *flushtime = 32;
+      *flushtime = sizeof(dataPoint);
     }
   //logfile = SD.open(filename, O_CREAT | O_WRITE | O_APPEND );
   if( ! *logfile ) {
@@ -68,10 +68,10 @@ void log_dataPoint(File * logfile, char * filename, dataPoint * store_dataPoint,
 }
 void log_gpsData(File * logfile, char * filename, gpsData * store_gpsData, int *flushtime){
 
-  *flushtime += 21; // Add number of bytes of gpsData to flushtime
+  *flushtime += sizeof(gpsData); // Add number of bytes of gpsData to flushtime
     if(*flushtime > 512){ // flush stores 512 bytes. gpsData struct is 60 bytes. 512/60=8.53
       logfile->flush();  
-      *flushtime = 21;
+      *flushtime = sizeof(gpsData);
     }
   //logfile = SD.open(filename, O_CREAT | O_WRITE | O_APPEND );
   if( ! *logfile ) {
@@ -86,10 +86,10 @@ void log_gpsData(File * logfile, char * filename, gpsData * store_gpsData, int *
 
 void log_basic(File * logfile, char * filename, basic * store_basic, int *flushtime){
 
-  *flushtime += 4; // Add number of bytes of dataPoint to flushtime
+  *flushtime += sizeof(basic); // Add number of bytes of dataPoint to flushtime
     if(*flushtime > 512){ // flush stores 512 bytes. dataPoint struct is 60 bytes. 512/60=8.53
       logfile->flush();  
-      *flushtime = 4;
+      *flushtime = sizeof(basic);
     }
   //logfile = SD.open(filename, O_CREAT | O_WRITE | O_APPEND );
   if( ! *logfile ) {

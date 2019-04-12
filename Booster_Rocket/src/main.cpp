@@ -118,7 +118,7 @@ void loop() {
 
     /// Log Time and Sensor Data //
     log_basic(&logfile, filename,&time_code,&flushtime);
-    log_gpsData(&logfile, filename,&data_gps,&flushtime);
+    log_dataPoint(&logfile, filename,&data_telemetry,&flushtime);
   }
 
   //////////////////////////

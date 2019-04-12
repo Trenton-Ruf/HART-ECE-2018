@@ -120,10 +120,10 @@ int main(int argc, char *argv[]){
     }
     printf("%f", data_gps.longitude);
     if((data_gps.misc >> 1 ) & 0x01){
-      printf("W,");
+      printf("E,");
     }
     else{
-      printf("E,");
+      printf("W,");
     }
     printf("%f,", data_gps.speed);
     printf("%f,", data_gps.angle);
