@@ -6,7 +6,7 @@
 
 //#include <samd21g18a.h>
 
-bool main_print = false; // true print to USB Serial
+bool main_print = true; // true print to USB Serial //for debugging
 
 bool launched = false; 
 
@@ -30,7 +30,17 @@ basic time_code;
 byte tx_buf[60];
 int size_tx;
 
+
+int GPS_Enable_Pin = A0; // pll low to enable, 
+int GPS_Reset_Pin = A1; // Reset if pulled low. Keep high otherwise.
+
 void setup() {
+
+  //Setup GPS Pins
+  pinMode(GPS_Enable_Pin,OUTPUT);
+  digitalWrite(GPS_Enable_Pin, LOW);
+  pinMode(GPS_Reset_Pin,OUTPUT);
+  digitalWrite(GPS_Reset_Pin, HIGH);
 
   //Setup LED's
   REG_PORT_DIR0 |= LED_R;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
@@ -58,12 +68,12 @@ void setup() {
   //////////////////////
   // Initialize Radio //
   //////////////////////
-  setup_radio(&rf69,&manager,BOOSTER_ADDRESS);
+  //setup_radio(&rf69,&manager,BOOSTER_ADDRESS);
 
   ////////////////////////
   // Initialize SD card //
   ////////////////////////
-  filename = setup_sd(& logfile);
+  //filename = setup_sd(& logfile);
 
   ////////////////////////
   // Initialize Sensors //
@@ -98,8 +108,8 @@ void loop() {
   memcpy(&tx_buf[sizeof(time_code)], &data_gps, sizeof(data_gps) );
 
   /// Log Time and Gps Data //
-  log_basic(&logfile, filename,&time_code,&flushtime);
-  log_gpsData(&logfile, filename,&data_gps,&flushtime);
+  //log_basic(&logfile, filename,&time_code,&flushtime);
+  //log_gpsData(&logfile, filename,&data_gps,&flushtime);
 
   }
 
@@ -117,15 +127,15 @@ void loop() {
     memcpy(&tx_buf[sizeof(time_code)], &data_telemetry, sizeof(data_telemetry) );
 
     /// Log Time and Sensor Data //
-    log_basic(&logfile, filename,&time_code,&flushtime);
-    log_dataPoint(&logfile, filename,&data_telemetry,&flushtime);
+    //log_basic(&logfile, filename,&time_code,&flushtime);
+    //log_dataPoint(&logfile, filename,&data_telemetry,&flushtime);
   }
 
   //////////////////////////
   // Send Data over Radio //
   //////////////////////////
   
- manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
+ //manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
 
 }
 

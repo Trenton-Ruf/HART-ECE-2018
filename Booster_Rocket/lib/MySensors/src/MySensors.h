@@ -9,6 +9,12 @@
 #include <Adafruit_GPS.h>
 
 
+#ifndef MYSENSORS_H_
+#define MYSENSORS_H_
+//int GPS_Enable_Pin = A0; // pll low to enable, 
+//int GPS_Reset_Pin = A1; // Reset if pulled low. Keep high otherwise.
+#endif
+
 void setup_accelerometer(void);
 void setup_gyroscope(void); 
 void setup_barometer(void);

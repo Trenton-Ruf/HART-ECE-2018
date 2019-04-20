@@ -131,6 +131,8 @@ void gather_gyroscope(struct dataPoint *telemetry)
 MS5xxx sensor(&Wire);
 
 void setup_barometer(void) {
+  if(sensor_print)
+  Serial.println("Barometer/Thermometer Test"); Serial.println("");
   if(sensor.connect()>0) {
     if(sensor_print){
       Serial.println("Error connecting...");
@@ -164,6 +166,8 @@ uint32_t gps_timer = millis();
 uint32_t gps_time_interval = 3000; // updates gps every 2 seconds 
 
 void setup_gps(Adafruit_GPS * GPS){
+  if(sensor_print)
+  Serial.println("GPS Test"); Serial.println("");
 
   GPS->begin(9600); //change to 57000 or something look at data sheet
   GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA); //Turns on RMC and GGA
