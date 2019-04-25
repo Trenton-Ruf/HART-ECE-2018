@@ -192,14 +192,22 @@ int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_co
     if (GPS->fix>0) {
       gpsdata->latitude=GPS->latitude;
       gpsdata->longitude=GPS->longitude;
-      //gpsdata->lon=GPS->lon;
-      //gpsdata->lat=GPS->lat;
+      if( GPS->lon == 'E'){
+        gpsdata->misc &= ~(1 << 1);
+      }
+      else{
+        gpsdata->misc |= 1 << 1; 
+      }
+       if( GPS->lat == 'N'){
+        gpsdata->misc &= ~(1 << 0);
+      }
+      else{
+        gpsdata->misc |= 1 << 0; 
+      }
       gpsdata->speed=GPS->speed;
       gpsdata->angle=GPS->angle;
       gpsdata->altitude=GPS->altitude;
-      //gpsdata->updated=true;
       time_code->code |= 1 << 1; //sets "gps fixed" bit high
-
 
       if (sensor_print){// print to USB serial
         Serial.print("\n\nGPS Fix!\n\n");

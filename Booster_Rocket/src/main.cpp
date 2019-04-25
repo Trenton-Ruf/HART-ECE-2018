@@ -13,10 +13,6 @@ int terminal_right = 17;
 
 bool main_print = true; // true print to USB Serial //for debugging
 
-bool launched = false; 
-
-unsigned int current_time;
-unsigned int start_time;
 
 RH_RF69 rf69(RFM69_CS, RFM69_INT); // instantiate radio driver
 RHReliableDatagram manager(rf69, BOOSTER_ADDRESS); //manages delivery and recipt
@@ -64,20 +60,24 @@ void setup() {
   // Set up serial monitor (comment out while loop if not using USB or it will stall here)
   Serial.begin(115200); //serial USB
 
-  delay(5000);
-  if(Serial){
-    main_print = true;
-  }
-
-  if(main_print){
+  if(main_print){ // if main_print is manually set 
     while (!Serial);
     Serial.println("Starting AV board test");
   }
+  else{
+    delay(5000);
+    if(Serial){
+      main_print = true;
+      Serial.println("Starting AV board test");
+    }
+  }
 
+
+  
   //////////////////////
   // Initialize Radio //
   //////////////////////
-  setup_radio(&rf69,&manager,BOOSTER_ADDRESS);
+  //setup_radio(&rf69,&manager,BOOSTER_ADDRESS);
 
   ////////////////////////
   // Initialize SD card //
@@ -87,8 +87,8 @@ void setup() {
   ////////////////////////
   // Initialize Sensors //
   ////////////////////////
-  setup_accelerometer();
-  setup_gyroscope();
+  //setup_accelerometer();
+  //setup_gyroscope();
   setup_barometer();
   setup_gps(&GPS);
   
@@ -100,6 +100,7 @@ void setup() {
 
 
 void loop() {
+
 
   time_code.time = millis(); // get time in milliseconds
   if(main_print){
@@ -126,8 +127,8 @@ void loop() {
     ///////////////////////////
     //   Gather Sensor Data  //
     ///////////////////////////
-    gather_accelerometer(&data_telemetry);
-    gather_gyroscope(&data_telemetry);
+    //gather_accelerometer(&data_telemetry);
+    //gather_gyroscope(&data_telemetry);
     gather_barometer(&data_telemetry);
 
     time_code.code &= ~(1 << 0);
@@ -144,7 +145,7 @@ void loop() {
   // Send Data over Radio //
   //////////////////////////
   
-  manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
+  //manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
 
 }
 
