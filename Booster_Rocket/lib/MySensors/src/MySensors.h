@@ -20,6 +20,8 @@ void setup_gyroscope(void);
 void setup_barometer(void);
 void setup_gps(Adafruit_GPS* GPS); 
 
+void set_sensor_print(bool set_bool);
+
 void gather_accelerometer(struct dataPoint *telemetry);
 void gather_gyroscope(struct dataPoint *telemetry); 
 void gather_barometer(struct dataPoint *telemetry);

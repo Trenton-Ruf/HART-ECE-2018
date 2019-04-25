@@ -1,6 +1,10 @@
 #include "MySensors.h"
 
-bool sensor_print = true; // set true to print to Serial
+bool sensor_print = false; // set true to print to Serial (For debugging).
+
+void set_sensor_print(bool set_bool){
+  sensor_print = set_bool;
+}
 
 ///////////////////
 // Accelerometer //

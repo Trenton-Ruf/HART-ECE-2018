@@ -63,11 +63,13 @@ void setup() {
   if(main_print){ // if main_print is manually set 
     while (!Serial);
     Serial.println("Starting AV board test");
+    set_sensor_print(true);//Does this work lmao?
   }
   else{
-    delay(5000);
-    if(Serial){
-      main_print = true;
+    delay(5000); 
+    if(Serial){ // if usb-serial is plugged in within 5 seconds
+      main_print = true; // enable serial print for debugging
+      set_sensor_print(true);
       Serial.println("Starting AV board test");
     }
   }
