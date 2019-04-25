@@ -54,8 +54,8 @@ void gather_accelerometer(struct dataPoint *telemetry) {
   }
 
   telemetry->acc.x = event.acceleration.x;
-  telemetry->acc.y = event.acceleration.y;
-  telemetry->acc.z = event.acceleration.z;
+  telemetry->acc.z = event.acceleration.y;
+  telemetry->acc.y = -1 * event.acceleration.z;
 }
 
 ///////////////
@@ -118,9 +118,9 @@ void gather_gyroscope(struct dataPoint *telemetry)
     Serial.println();
   } 
 
-  telemetry->gyro.x=event.gyro.x;
-  telemetry->gyro.y=event.gyro.y;
-  telemetry->gyro.z=event.gyro.z;
+  telemetry->gyro.x=event.gyro.y;
+  telemetry->gyro.y=event.gyro.z;
+  telemetry->gyro.z=event.gyro.x;
 
 }
 
@@ -212,9 +212,9 @@ int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_co
       if (sensor_print){// print to USB serial
         Serial.print("\n\nGPS Fix!\n\n");
         Serial.print("GPS Latitude: "); Serial.println(gpsdata->latitude);
-        Serial.print("GPS lat: "); Serial.println(gpsdata->lat);
+        //Serial.print("GPS lat: "); Serial.println(gpsdata->lat);
         Serial.print("GPS Longitude: "); Serial.println(gpsdata->longitude);
-        Serial.print("GPS lon: "); Serial.println(gpsdata->lon);
+        //Serial.print("GPS lon: "); Serial.println(gpsdata->lon);
         Serial.print("GPS Speed: ");  Serial.println(gpsdata->speed);
         Serial.print("GPS Angle: "); Serial.println(gpsdata->angle);
         Serial.print("GPS Altitude: "); Serial.println(gpsdata->altitude);
