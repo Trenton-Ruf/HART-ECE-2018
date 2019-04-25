@@ -212,9 +212,9 @@ int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_co
       if (sensor_print){// print to USB serial
         Serial.print("\n\nGPS Fix!\n\n");
         Serial.print("GPS Latitude: "); Serial.println(gpsdata->latitude);
-        //Serial.println(gpsdata->lat);
+        Serial.print("GPS lat: "); Serial.println(gpsdata->lat);
         Serial.print("GPS Longitude: "); Serial.println(gpsdata->longitude);
-        //Serial.println(gpsdata->lon);
+        Serial.print("GPS lon: "); Serial.println(gpsdata->lon);
         Serial.print("GPS Speed: ");  Serial.println(gpsdata->speed);
         Serial.print("GPS Angle: "); Serial.println(gpsdata->angle);
         Serial.print("GPS Altitude: "); Serial.println(gpsdata->altitude);
