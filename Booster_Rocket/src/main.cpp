@@ -6,6 +6,11 @@
 
 //#include <samd21g18a.h>
 
+//Mosfets gates, set high to Ignite.
+int terminal_left = 19;
+int terminal_middle = 18;
+int terminal_right = 17;
+
 bool main_print = true; // true print to USB Serial //for debugging
 
 bool launched = false; 
@@ -42,6 +47,10 @@ void setup() {
   pinMode(GPS_Reset_Pin,OUTPUT);
   digitalWrite(GPS_Reset_Pin, HIGH);
 
+  pinMode(10,OUTPUT);
+  digitalWrite(10,HIGH);
+
+
   //Setup LED's
   REG_PORT_DIR0 |= LED_R;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
   REG_PORT_OUTCLR0= LED_R; // Set port low
@@ -68,7 +77,7 @@ void setup() {
   //////////////////////
   // Initialize Radio //
   //////////////////////
-  //setup_radio(&rf69,&manager,BOOSTER_ADDRESS);
+  setup_radio(&rf69,&manager,BOOSTER_ADDRESS);
 
   ////////////////////////
   // Initialize SD card //
@@ -135,7 +144,7 @@ void loop() {
   // Send Data over Radio //
   //////////////////////////
   
- //manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
+  manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
 
 }
 

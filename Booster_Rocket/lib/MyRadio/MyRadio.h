@@ -6,9 +6,10 @@
 
 #define RF69_FREQ 433 // can be between 400-460 MHz according to adafruit
 
-#define RFM69_CS      15 //  A1 . can be any digital pin (output)
-#define RFM69_INT     17 //  A2 . can be any interupt capable pin (input) "All pins can be interrupt inputs"
-#define RFM69_RST     16 //  A3 . can be any digital pin (output)
+#define RFM69_CS      5 //   . can be any digital pin (output)
+#define RFM69_INT     6 //  A2 . can be any interupt capable pin (input) "All pins can be interrupt inputs"
+#define RFM69_RST     9 //  A3 . can be any digital pin (output)
+#define RFM69_ENABLE  10 //  A3 . can be any digital pin (output)
 
 #define BOOSTER_ADDRESS 1 // 1 if booster, 2 if sustainer
 #define SUSTAINER_ADDRESS 2
