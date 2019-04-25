@@ -32,15 +32,8 @@ void setup_accelerometer(void) {
 
 void gather_accelerometer(struct dataPoint *telemetry) {
 
-  lis.read();      // get X Y and Z data at once
-  // Then print out the raw data
-  /*
-  Serial.print("X:  "); Serial.print(lis.x); 
-  Serial.print("  \tY:  "); Serial.print(lis.y); 
-  Serial.print("  \tZ:  "); Serial.print(lis.z); 
-  */
-  // Or....get a new sensor event, normalized 
-
+  lis.read(); // Check if necissary 
+  
   sensors_event_t event; 
   lis.getEvent(&event);
   
@@ -53,6 +46,8 @@ void gather_accelerometer(struct dataPoint *telemetry) {
     Serial.println(" m/s^2 ");
   }
 
+  // Map orientation of the accelerometer to how its mounted on the PCB
+  // When mounted: Z-axis up, X-axis left, Y-axis out.
   telemetry->acc.x = event.acceleration.x;
   telemetry->acc.z = event.acceleration.y;
   telemetry->acc.y = -1 * event.acceleration.z;
@@ -91,13 +86,13 @@ void setup_gyroscope(void)
   {
     /* There was a problem detecting the L3GD20 ... check your connections */
     if(sensor_print){
-      Serial.println("Ooops, no L3GD20 detected ... Check your wiring!");
-      //ERROR
+      Serial.println("L3GD20, not detected.");
+      //maybe blink ERROR
     }
   }
-  
-  /* Display some basic information on this sensor */
 
+  // Map orientation of the gyroscope to how its mounted on the PCB
+  // When mounted: Z-axis up, X-axis left, Y-axis out.
   if(sensor_print)
   displaySensorDetails();
 }
@@ -121,7 +116,6 @@ void gather_gyroscope(struct dataPoint *telemetry)
   telemetry->gyro.x=event.gyro.y;
   telemetry->gyro.y=event.gyro.z;
   telemetry->gyro.z=event.gyro.x;
-
 }
 
 //////////////////////////////////////
@@ -136,7 +130,7 @@ void setup_barometer(void) {
   if(sensor.connect()>0) {
     if(sensor_print){
       Serial.println("Error connecting...");
-      //ERROR
+      //maybe ERROR blink
     }
     setup();
   }
@@ -147,7 +141,7 @@ void gather_barometer(struct dataPoint *telemetry) {
   sensor.Readout();
   if(sensor_print){
     Serial.print("Temperature [C]: ");
-    Serial.println(sensor.GetTemp()/100);
+    Serial.println(sensor.GetTemp()/100); // Have to divide by 100 for accurate Temp
     Serial.print("Pressure [Pa]: ");
     Serial.println(sensor.GetPres());
   }
@@ -158,8 +152,6 @@ void gather_barometer(struct dataPoint *telemetry) {
 /////////
 // GPS //
 /////////
-
-
 
 //#define GPSECHO true // Set true to echo gps data to USB serial
 uint32_t gps_timer = millis(); 
