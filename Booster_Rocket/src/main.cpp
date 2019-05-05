@@ -38,51 +38,46 @@ void setup() {
   // Setup GPIO PINS //
   /////////////////////
 
-  pinMode(A0,OUTPUT);
-  digitalWrite(A0, LOW);
-  pinMode(A1,OUTPUT);
-  digitalWrite(A1, HIGH);
-
-  //Setup GPS Pins
-  //REG_PORT_DIR0 |= GPS_Enable_Pin; // Set port to output
-  //REG_PORT_OUTCLR0 |= GPS_Enable_Pin; // Set port low
-
-  //Setting GPS reset high or low will cause it to become non-responsive. need to solve
-  //if changing gps refresh rate
-  //REG_PORT_DIR1 |= GPS_Reset_Pin; // Set port to output
-  //REG_PORT_OUTSET1 |= GPS_Reset_Pin; // Set port High
-  
-
-  pinMode(10,OUTPUT); // Radio enable
-  digitalWrite(10,HIGH);
-
-  //Setup LED's
-  REG_PORT_DIR0 |= LED_R;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
-  REG_PORT_OUTCLR0= LED_R; // Set port low
-
-  REG_PORT_DIR0 |= LED_G;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA06;" also works
-  REG_PORT_OUTCLR0= LED_G; // Set port low
-
   //  Group[0] is port A
   //  Group[1] is port B
 
-  // Set up serial monitor (comment out while loop if not using USB or it will stall here)
+  //Setup GPS Pins
+  REG_PORT_DIR0 |= GPS_Enable_Pin; // Set port to output
+  REG_PORT_OUTCLR0 |= GPS_Enable_Pin; // Set port low
+
+  //if changing gps refresh rate
+  REG_PORT_DIR1 |= GPS_Reset_Pin; // Set port to output
+  REG_PORT_OUTSET1 |= GPS_Reset_Pin; // Set port High
+  
+  // Radio enable
+  REG_PORT_DIR0 |= RFM69_ENABLE; // Set port to output
+  REG_PORT_OUTSET0 |= RFM69_ENABLE; // Set port low
+
+  //Setup LED's
+  REG_PORT_DIR0 |= LED_R;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
+  REG_PORT_OUTCLR0 |= LED_R; // Set port low
+
+  REG_PORT_DIR0 |= LED_G;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA06;" also works
+  REG_PORT_OUTCLR0 |= LED_G; // Set port low
+
+
+  // Set up serial monitor
   Serial.begin(115200); //serial USB
-/*
+
   if(main_print){ // if main_print is manually set 
     while (!Serial);
     Serial.println("Starting AV board test");
-    set_sensor_print(true);//Does this work lmao?
+    set_sensor_print(true);
   }
   else{
-    delay(9000); 
+    delay(5000); 
     if(Serial){ // if usb-serial is plugged in within 5 seconds
       main_print = true; // enable serial print for debugging
       set_sensor_print(true);
       Serial.println("Starting AV board test");
     }
   }
-*/
+
 
   
 set_sensor_print(true);
@@ -109,13 +104,6 @@ set_sensor_print(true);
     Serial.println("Radio AV Board test");
     Serial.println();
   }
-/*
-int i = 0;
-  while(i < 1000){
-    gather_gps(&GPS, &data_gps,&time_code);
-    i++;
-  }
-  */
 }
 
 
@@ -155,13 +143,17 @@ void loop() {
     ///////////////////////////
     //   Gather Sensor Data  //
     ///////////////////////////
+
+    // Need multiple GPS.read() functions to complete a GPS datagram. 
+    // Will move to interupt driven method.
+    // GPS.read() is recommended to be called every 1ms
+
     GPS.read();
     gather_accelerometer(&data_telemetry);
     GPS.read();
     gather_gyroscope(&data_telemetry);
     GPS.read();
     gather_barometer(&data_telemetry);
-
     GPS.read();
 
     time_code.code &= ~(1 << 0);
@@ -186,7 +178,7 @@ void loop() {
   if(main_print){
    Serial.print("Start Data Transmission\n");
   }
-  delay(5); 
+  delay(5); // Need delay to complete GPS read before transmitting data
   manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
 
   if(main_print){

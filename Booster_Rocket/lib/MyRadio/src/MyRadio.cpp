@@ -8,15 +8,13 @@ int RADIO_ADDRESS;
 void  setup_radio(RH_RF69 *rf69,  RHReliableDatagram *manager ,int ADDRESS){
   RADIO_ADDRESS = ADDRESS;
 
-  pinMode(RFM69_RST, OUTPUT);
-  digitalWrite(RFM69_RST, LOW);
-  // change to register edits
-
-  // rfm69hcw Radio module manual reset
-  digitalWrite(RFM69_RST, HIGH);
+  // Reset radio
+  REG_PORT_DIR0 |= RFM69_RST;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
+  REG_PORT_OUTCLR0 |= RFM69_RST; // Set port low
   delay(10);
-  digitalWrite(RFM69_RST, LOW);
+  REG_PORT_OUTSET0 |= RFM69_RST; // Set port high
   delay(10);
+  REG_PORT_OUTCLR0 |= RFM69_RST; // Set port low
 
   if (!manager->init()){
     if(radio_print){
@@ -44,54 +42,5 @@ void  setup_radio(RH_RF69 *rf69,  RHReliableDatagram *manager ,int ADDRESS){
   }
 }
 
-//MAKE FUNCTIONS WITH VOID POINTER PARAMETERS SO CAN DO BOTH GPS AND SENSORS
 
-void sendTelemetry(RH_RF69 *rf69,  RHReliableDatagram *manager, struct dataPoint *telemetry){
-
-  byte tx_buf[sizeof(*telemetry)] = {0};
-
-  memcpy(tx_buf, telemetry, sizeof(*telemetry) );
-  /*
-  if (! manager->sendtoWait((uint8_t *)tx_buf, sizeof(*telemetry), SERVER_ADDRESS)) {
-    if(radio_print){
-      Serial.println("Sending failed (no ack)");
-    }
-  }  
-  */
-  manager->sendto((uint8_t *)tx_buf, sizeof(*telemetry), SERVER_ADDRESS);
-
-  // change to not wait for ACK
-}
-
-
-void recieveTelemetry(RH_RF69 *rf69,  RHReliableDatagram *manager, struct dataPoint *telemetry) {
-
-/*
-  uint8_t buf[RH_RF69_MAX_MESSAGE_LEN];
-  uint8_t len = sizeof(buf);
-  uint8_t from;
-
-  if (manager->recvfromAck(buf, &len, &from)){
-    Serial.println((char *)buf);
-  }
-*/
-  
-  byte rx_buf[sizeof(*telemetry)] = {0};
-
-  if (manager->available()){
-    // Wait for a message addressed to us from the client
-    uint8_t len = sizeof(rx_buf);
-    uint8_t from;
-    if (manager->recvfromAck(rx_buf, &len, &from)) {
-      memcpy(telemetry, rx_buf, sizeof(*telemetry));
-      //Serial.write((char *)telemetry, sizeof(*telemetry));
-
-      Serial.print("temperature : ");
-      Serial.println(telemetry->tmp);     
-    }
-  }
-
-
-
-}
 

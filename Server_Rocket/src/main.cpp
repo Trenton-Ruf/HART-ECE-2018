@@ -12,38 +12,38 @@ basic time_code;
 RH_RF69 rf69(RFM69_CS, RFM69_INT); // instantiate radio driver
 RHReliableDatagram manager(rf69, SERVER_ADDRESS); //manages delivery and recipt
 
-#define EXTERNAL_LED 5 
-
-
+#define EXTERNAL_LED PORT_PA15
+ 
 void setup() {
+  /////////////////
+  // Setup LED's //
+  /////////////////
 
-  //Setup LED's
+  //red microcontroller LED 
   REG_PORT_DIR0 |= LED_R;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
   REG_PORT_OUTCLR0= LED_R; // Set port low
-
+  //green microcontroller LED
   REG_PORT_DIR0 |= LED_G;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA06;" also works
   REG_PORT_OUTCLR0= LED_G; // Set port low
-
-  pinMode(EXTERNAL_LED, OUTPUT);
-  digitalWrite(EXTERNAL_LED, HIGH);
-
+  //red enclousure LED  on through setup
+  REG_PORT_DIR0 |= EXTERNAL_LED;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA06;" also works
+  REG_PORT_OUTSET0= EXTERNAL_LED; // Set port high
   //  Group[0] is port A
   //  Group[1] is port B
 
-  // Set up serial monitor (comment out if not using USB or it will stall here)
+  // Set up serial monitor
   Serial.begin(115200);
-  while (!Serial);
+  while (!Serial); //Wait for USB connection
 
+  // Setup radio as server
   setup_radio(&rf69,&manager,SERVER_ADDRESS);
 
   if(print_main){
-    Serial.println();
-    Serial.println("Radio Ground Station test");
-    Serial.println();
+    Serial.println("\n\nRadio Ground Station test\n\n");
   }
 
-  digitalWrite(EXTERNAL_LED,LOW);
-
+  //Red enclousure LED off after setup
+  REG_PORT_OUTSET0 |= EXTERNAL_LED; // Set port high
 }
 
 void loop() {
@@ -66,12 +66,12 @@ void loop() {
       if((time_code.code & (1 << 1))){ // if GPS has fix
         if((time_code.code & (1 << 2))){ // if sustainer
           //Turn on an LED
-          REG_PORT_OUTSET0= LED_R; 
+          REG_PORT_OUTSET0 |= LED_R; 
         } 
         else{ // if Booster 
         //Turn on different LED
-        REG_PORT_OUTSET0= LED_G; 
-        digitalWrite(EXTERNAL_LED, HIGH);
+        REG_PORT_OUTSET0 |= LED_G; 
+        REG_PORT_OUTSET0 |= EXTERNAL_LED;
         }
       }
       if(!(time_code.code & (1 << 0))){ // if reading dataPoint
@@ -82,7 +82,6 @@ void loop() {
           Serial.print("pressure : ");
           Serial.println(data_telemetry.prs);
         }
-
        
       }
       else{ // if reading gpsData
