@@ -78,10 +78,6 @@ void setup() {
     }
   }
 
-
-  
-set_sensor_print(true);
-
   //////////////////////
   // Initialize Radio //
   //////////////////////
