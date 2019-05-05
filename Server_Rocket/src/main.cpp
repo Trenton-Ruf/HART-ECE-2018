@@ -12,6 +12,8 @@ basic time_code;
 RH_RF69 rf69(RFM69_CS, RFM69_INT); // instantiate radio driver
 RHReliableDatagram manager(rf69, SERVER_ADDRESS); //manages delivery and recipt
 
+#define EXTERNAL_LED 5 
+
 
 void setup() {
 
@@ -21,6 +23,9 @@ void setup() {
 
   REG_PORT_DIR0 |= LED_G;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA06;" also works
   REG_PORT_OUTCLR0= LED_G; // Set port low
+
+  pinMode(EXTERNAL_LED, OUTPUT);
+  digitalWrite(EXTERNAL_LED, HIGH);
 
   //  Group[0] is port A
   //  Group[1] is port B
@@ -36,6 +41,8 @@ void setup() {
     Serial.println("Radio Ground Station test");
     Serial.println();
   }
+
+  digitalWrite(EXTERNAL_LED,LOW);
 
 }
 
@@ -64,6 +71,7 @@ void loop() {
         else{ // if Booster 
         //Turn on different LED
         REG_PORT_OUTSET0= LED_G; 
+        digitalWrite(EXTERNAL_LED, HIGH);
         }
       }
       if(!(time_code.code & (1 << 0))){ // if reading dataPoint
@@ -87,8 +95,9 @@ void loop() {
         }
       }
 
-      Serial.write(rx_buf,60); //write to Serial without parsing
-
+      if(! print_main){
+        Serial.write(rx_buf,60); //write to Serial without parsing
+      }
     }
   }
 }

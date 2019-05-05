@@ -1,6 +1,12 @@
 #include "MySensors.h"
 
-bool sensor_print = true; // set true to print to Serial
+
+
+bool sensor_print = false; // set true to print to Serial (For debugging).
+
+void set_sensor_print(bool set_bool){
+  sensor_print = set_bool;
+}
 
 ///////////////////
 // Accelerometer //
@@ -32,15 +38,8 @@ void setup_accelerometer(void) {
 
 void gather_accelerometer(struct dataPoint *telemetry) {
 
-  lis.read();      // get X Y and Z data at once
-  // Then print out the raw data
-  /*
-  Serial.print("X:  "); Serial.print(lis.x); 
-  Serial.print("  \tY:  "); Serial.print(lis.y); 
-  Serial.print("  \tZ:  "); Serial.print(lis.z); 
-  */
-  // Or....get a new sensor event, normalized 
-
+  lis.read(); // Check if necissary 
+  
   sensors_event_t event; 
   lis.getEvent(&event);
   
@@ -53,9 +52,11 @@ void gather_accelerometer(struct dataPoint *telemetry) {
     Serial.println(" m/s^2 ");
   }
 
+  // Map orientation of the accelerometer to how its mounted on the PCB
+  // When mounted: Z-axis up, X-axis left, Y-axis out.
   telemetry->acc.x = event.acceleration.x;
-  telemetry->acc.y = event.acceleration.y;
-  telemetry->acc.z = event.acceleration.z;
+  telemetry->acc.z = event.acceleration.y;
+  telemetry->acc.y = -1 * event.acceleration.z;
 }
 
 ///////////////
@@ -91,13 +92,13 @@ void setup_gyroscope(void)
   {
     /* There was a problem detecting the L3GD20 ... check your connections */
     if(sensor_print){
-      Serial.println("Ooops, no L3GD20 detected ... Check your wiring!");
-      //ERROR
+      Serial.println("L3GD20, not detected.");
+      //maybe blink ERROR
     }
   }
-  
-  /* Display some basic information on this sensor */
 
+  // Map orientation of the gyroscope to how its mounted on the PCB
+  // When mounted: Z-axis up, X-axis left, Y-axis out.
   if(sensor_print)
   displaySensorDetails();
 }
@@ -118,10 +119,9 @@ void gather_gyroscope(struct dataPoint *telemetry)
     Serial.println();
   } 
 
-  telemetry->gyro.x=event.gyro.x;
-  telemetry->gyro.y=event.gyro.y;
-  telemetry->gyro.z=event.gyro.z;
-
+  telemetry->gyro.x=event.gyro.y;
+  telemetry->gyro.y=event.gyro.z;
+  telemetry->gyro.z=event.gyro.x;
 }
 
 //////////////////////////////////////
@@ -131,10 +131,12 @@ void gather_gyroscope(struct dataPoint *telemetry)
 MS5xxx sensor(&Wire);
 
 void setup_barometer(void) {
+  if(sensor_print)
+  Serial.println("Barometer/Thermometer Test"); Serial.println("");
   if(sensor.connect()>0) {
     if(sensor_print){
       Serial.println("Error connecting...");
-      //ERROR
+      //maybe ERROR blink
     }
     setup();
   }
@@ -145,7 +147,7 @@ void gather_barometer(struct dataPoint *telemetry) {
   sensor.Readout();
   if(sensor_print){
     Serial.print("Temperature [C]: ");
-    Serial.println(sensor.GetTemp()/100);
+    Serial.println(sensor.GetTemp()/100); // Have to divide by 100 for accurate Temp
     Serial.print("Pressure [Pa]: ");
     Serial.println(sensor.GetPres());
   }
@@ -157,27 +159,45 @@ void gather_barometer(struct dataPoint *telemetry) {
 // GPS //
 /////////
 
-
-
 //#define GPSECHO true // Set true to echo gps data to USB serial
 uint32_t gps_timer = millis(); 
-uint32_t gps_time_interval = 3000; // updates gps every 2 seconds 
+uint32_t gps_time_interval = 2000; // set to twice NMEA_UPDATE period
 
 void setup_gps(Adafruit_GPS * GPS){
+  if(sensor_print){
+    Serial.println("GPS Test");
+  }
 
-  GPS->begin(9600); //change to 57000 or something look at data sheet
+  GPS->begin(9600); // set default baud rate.
+
+  GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_OFF); // Stop GPS from outputting data while changing settings
+  GPS->sendCommand("$PMTK251,38400*27<CR><LF>"); // Change GPS baud to 38400
+ // GPS->sendCommand("$PMTK251,57600*2C"); // Change GPS baud to 57600
+  delay(1000);
+  GPS->begin(38400); // reconnect on new baud-rate
+  
   GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA); //Turns on RMC and GGA
-  GPS->sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); // Sets update rate to 1 Hz  
-  GPS->sendCommand(PGCMD_ANTENNA); // requests antenna status
+  //GPS->sendCommand(PMTK_SET_NMEA_FIX_1HZ); // Set GPS fix interval to 1,5, or 10hz
+  //delay(100);
+  GPS->sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); // Sets update rate to 1,5, or 10z
+  
+  GPS->sendCommand(PGCMD_ANTENNA); // requests antenna status, might not need
   //delay(1000);
+
+  digitalWrite(A1, LOW);
+  delay(1000);
+  digitalWrite(A1,HIGH);
+  
+
 } 
 
 int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_code){
   GPS->read();
-
+  
   if (GPS->newNMEAreceived()) {
     if(sensor_print){
-      Serial.println(GPS->lastNMEA()); 
+        Serial.println("Printing NMEA");
+        Serial.println(GPS->lastNMEA()); 
     }
     if (!GPS->parse(GPS->lastNMEA()))
       return 0;
@@ -188,34 +208,41 @@ int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_co
     if (GPS->fix>0) {
       gpsdata->latitude=GPS->latitude;
       gpsdata->longitude=GPS->longitude;
-      //gpsdata->lon=GPS->lon;
-      //gpsdata->lat=GPS->lat;
+      if( GPS->lon == 'E'){
+        gpsdata->misc &= ~(1 << 1);
+      }
+      else{
+        gpsdata->misc |= 1 << 1; 
+      }
+       if( GPS->lat == 'N'){
+        gpsdata->misc &= ~(1 << 0);
+      }
+      else{
+        gpsdata->misc |= 1 << 0; 
+      }
       gpsdata->speed=GPS->speed;
       gpsdata->angle=GPS->angle;
       gpsdata->altitude=GPS->altitude;
-      //gpsdata->updated=true;
       time_code->code |= 1 << 1; //sets "gps fixed" bit high
-
 
       if (sensor_print){// print to USB serial
         Serial.print("\n\nGPS Fix!\n\n");
         Serial.print("GPS Latitude: "); Serial.println(gpsdata->latitude);
-        //Serial.println(gpsdata->lat);
+        //Serial.print("GPS lat: "); Serial.println(gpsdata->lat);
         Serial.print("GPS Longitude: "); Serial.println(gpsdata->longitude);
-        //Serial.println(gpsdata->lon);
+        //Serial.print("GPS lon: "); Serial.println(gpsdata->lon);
         Serial.print("GPS Speed: ");  Serial.println(gpsdata->speed);
         Serial.print("GPS Angle: "); Serial.println(gpsdata->angle);
         Serial.print("GPS Altitude: "); Serial.println(gpsdata->altitude);
-        delay(500);
-
-        return 1;
+        //delay(500);
       }
+      return 1; // must be outsude of sensor_print
     }
     else{
       time_code->code &= ~(1 << 1);
       if(sensor_print){
         Serial.println("\nNo GPS Fix");
-        delay(500);
+        //delay(500);
       }
     }
   } 
