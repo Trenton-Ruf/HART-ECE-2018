@@ -13,6 +13,14 @@
 #define MYSENSORS_H_
 //int GPS_Enable_Pin = A0; // pll low to enable, 
 //int GPS_Reset_Pin = A1; // Reset if pulled low. Keep high otherwise.
+
+#define GPS_Enable_Pin  PORT_PA02 // A0 // pull low to enable, 
+#define GPS_Reset_Pin   PORT_PB08 // A1 // Reset if pulled low. Keep high otherwise.
+
+#define PMTK_SET_NMEA_FIX_1HZ  "$PMTK300,1000,0,0,0,0*1C"
+#define PMTK_SET_NMEA_FIX_5HZ  "$PMTK300,200,0,0,0,0*2F"
+#define PMTK_SET_NMEA_FIX_10HZ "$PMTK300,100,0,0,0,0*2"
+
 #endif
 
 void setup_accelerometer(void);

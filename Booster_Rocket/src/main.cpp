@@ -13,7 +13,6 @@ int terminal_right = 17;
 
 bool main_print = true; // true print to USB Serial //for debugging
 
-
 RH_RF69 rf69(RFM69_CS, RFM69_INT); // instantiate radio driver
 RHReliableDatagram manager(rf69, BOOSTER_ADDRESS); //manages delivery and recipt
 
@@ -24,28 +23,38 @@ int flushtime = 0;
 #define GPSSerial Serial1
 Adafruit_GPS GPS(&GPSSerial);
 
-dataPoint data_telemetry;
-gpsData data_gps;
-basic time_code;
+
+// STRUCTS //
+dataPoint data_telemetry; // acc,gyro,prs,tmpr
+gpsData data_gps; // GPS
+basic time_code; // time (ms), code 
 
 byte tx_buf[60];
 int size_tx;
 
-
-int GPS_Enable_Pin = A0; // pll low to enable, 
-int GPS_Reset_Pin = A1; // Reset if pulled low. Keep high otherwise.
-
 void setup() {
 
+  /////////////////////
+  // Setup GPIO PINS //
+  /////////////////////
+
+  pinMode(A0,OUTPUT);
+  digitalWrite(A0, LOW);
+  pinMode(A1,OUTPUT);
+  digitalWrite(A1, HIGH);
+
   //Setup GPS Pins
-  pinMode(GPS_Enable_Pin,OUTPUT);
-  digitalWrite(GPS_Enable_Pin, LOW);
-  pinMode(GPS_Reset_Pin,OUTPUT);
-  digitalWrite(GPS_Reset_Pin, HIGH);
+  //REG_PORT_DIR0 |= GPS_Enable_Pin; // Set port to output
+  //REG_PORT_OUTCLR0 |= GPS_Enable_Pin; // Set port low
 
-  pinMode(10,OUTPUT);
+  //Setting GPS reset high or low will cause it to become non-responsive. need to solve
+  //if changing gps refresh rate
+  //REG_PORT_DIR1 |= GPS_Reset_Pin; // Set port to output
+  //REG_PORT_OUTSET1 |= GPS_Reset_Pin; // Set port High
+  
+
+  pinMode(10,OUTPUT); // Radio enable
   digitalWrite(10,HIGH);
-
 
   //Setup LED's
   REG_PORT_DIR0 |= LED_R;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
@@ -59,38 +68,40 @@ void setup() {
 
   // Set up serial monitor (comment out while loop if not using USB or it will stall here)
   Serial.begin(115200); //serial USB
-
+/*
   if(main_print){ // if main_print is manually set 
     while (!Serial);
     Serial.println("Starting AV board test");
     set_sensor_print(true);//Does this work lmao?
   }
   else{
-    delay(5000); 
+    delay(9000); 
     if(Serial){ // if usb-serial is plugged in within 5 seconds
       main_print = true; // enable serial print for debugging
       set_sensor_print(true);
       Serial.println("Starting AV board test");
     }
   }
-
+*/
 
   
+set_sensor_print(true);
+
   //////////////////////
   // Initialize Radio //
   //////////////////////
-  //setup_radio(&rf69,&manager,BOOSTER_ADDRESS);
+  setup_radio(&rf69,&manager,BOOSTER_ADDRESS);
 
   ////////////////////////
   // Initialize SD card //
   ////////////////////////
-  //filename = setup_sd(& logfile);
+  filename = setup_sd(& logfile);
 
   ////////////////////////
   // Initialize Sensors //
   ////////////////////////
-  //setup_accelerometer();
-  //setup_gyroscope();
+  setup_accelerometer();
+  setup_gyroscope();
   setup_barometer();
   setup_gps(&GPS);
   
@@ -98,6 +109,13 @@ void setup() {
     Serial.println("Radio AV Board test");
     Serial.println();
   }
+/*
+int i = 0;
+  while(i < 1000){
+    gather_gps(&GPS, &data_gps,&time_code);
+    i++;
+  }
+  */
 }
 
 
@@ -108,11 +126,13 @@ void loop() {
   if(main_print){
     Serial.print("Time: ");
     Serial.println(time_code.time);
+    
   }
 
   /////////////////////////
   //   Gather GPS Data   //
   /////////////////////////
+  
   if (gather_gps(&GPS, &data_gps,&time_code)){ // if return 1 send gps data
   time_code.code |= 1 << 0;
   size_tx = sizeof(time_code) + sizeof(data_gps);
@@ -120,18 +140,25 @@ void loop() {
   memcpy(&tx_buf[sizeof(time_code)], &data_gps, sizeof(data_gps) );
 
   /// Log Time and Gps Data //
-  //log_basic(&logfile, filename,&time_code,&flushtime);
-  //log_gpsData(&logfile, filename,&data_gps,&flushtime);
-
+  if(main_print){
+    Serial.print("starting GPS log\n");
+    }
+  log_basic(&logfile, filename,&time_code,&flushtime);
+  log_gpsData(&logfile, filename,&data_gps,&flushtime);
+  if(main_print){
+    Serial.print("Finish GPS log\n");
+    }
   }
 
   else{
     ///////////////////////////
     //   Gather Sensor Data  //
     ///////////////////////////
-    //gather_accelerometer(&data_telemetry);
-    //gather_gyroscope(&data_telemetry);
+    gather_accelerometer(&data_telemetry);
+    gather_gyroscope(&data_telemetry);
     gather_barometer(&data_telemetry);
+
+    GPS.read();
 
     time_code.code &= ~(1 << 0);
     size_tx = sizeof(time_code) + sizeof(data_telemetry);
@@ -139,15 +166,25 @@ void loop() {
     memcpy(&tx_buf[sizeof(time_code)], &data_telemetry, sizeof(data_telemetry) );
 
     /// Log Time and Sensor Data //
-    //log_basic(&logfile, filename,&time_code,&flushtime);
-    //log_dataPoint(&logfile, filename,&data_telemetry,&flushtime);
+    log_basic(&logfile, filename,&time_code,&flushtime);
+    log_dataPoint(&logfile, filename,&data_telemetry,&flushtime);
   }
+
+
 
   //////////////////////////
   // Send Data over Radio //
   //////////////////////////
   
-  //manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
+  if(main_print){
+   Serial.print("Start Data Transmission\n");
+  }
+  
+  manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
+
+  if(main_print){
+   Serial.print("END Data Transmission\n");
+  }
 
 }
 

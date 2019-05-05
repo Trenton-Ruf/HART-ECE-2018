@@ -1,5 +1,7 @@
 #include "MySensors.h"
 
+
+
 bool sensor_print = false; // set true to print to Serial (For debugging).
 
 void set_sensor_print(bool set_bool){
@@ -159,17 +161,34 @@ void gather_barometer(struct dataPoint *telemetry) {
 
 //#define GPSECHO true // Set true to echo gps data to USB serial
 uint32_t gps_timer = millis(); 
-uint32_t gps_time_interval = 3000; // updates gps every 2 seconds 
+uint32_t gps_time_interval = 2000; // set to twice NMEA_UPDATE period
 
 void setup_gps(Adafruit_GPS * GPS){
-  if(sensor_print)
-  Serial.println("GPS Test"); Serial.println("");
+  if(sensor_print){
+    Serial.println("GPS Test");
+  }
 
-  GPS->begin(9600); //change to 57000 or something look at data sheet
+  GPS->begin(9600); // set default baud rate.
+
+  GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_OFF); // Stop GPS from outputting data while changing settings
+  GPS->sendCommand("$PMTK251,38400*27<CR><LF>"); // Change GPS baud to 38400
+ // GPS->sendCommand("$PMTK251,57600*2C"); // Change GPS baud to 57600
+  delay(1000);
+  GPS->begin(38400); // reconnect on new baud-rate
+  
   GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA); //Turns on RMC and GGA
-  GPS->sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); // Sets update rate to 1 Hz  
-  GPS->sendCommand(PGCMD_ANTENNA); // requests antenna status
+  //GPS->sendCommand(PMTK_SET_NMEA_FIX_1HZ); // Set GPS fix interval to 1,5, or 10hz
+  //delay(100);
+  GPS->sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); // Sets update rate to 1,5, or 10z
+  
+  GPS->sendCommand(PGCMD_ANTENNA); // requests antenna status, might not need
   //delay(1000);
+
+  digitalWrite(A1, LOW);
+  delay(1000);
+  digitalWrite(A1,HIGH);
+  
+
 } 
 
 int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_code){
@@ -177,7 +196,8 @@ int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_co
 
   if (GPS->newNMEAreceived()) {
     if(sensor_print){
-      Serial.println(GPS->lastNMEA()); 
+        Serial.println("Printing NMEA");
+        Serial.println(GPS->lastNMEA()); 
     }
     if (!GPS->parse(GPS->lastNMEA()))
       return 0;
@@ -214,16 +234,15 @@ int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_co
         Serial.print("GPS Speed: ");  Serial.println(gpsdata->speed);
         Serial.print("GPS Angle: "); Serial.println(gpsdata->angle);
         Serial.print("GPS Altitude: "); Serial.println(gpsdata->altitude);
-        delay(500);
-
-        return 1;
+        //delay(500);
       }
+      return 1; // must be outsude of sensor_print
     }
     else{
       time_code->code &= ~(1 << 1);
       if(sensor_print){
         Serial.println("\nNo GPS Fix");
-        delay(500);
+        //delay(500);
       }
     }
   } 

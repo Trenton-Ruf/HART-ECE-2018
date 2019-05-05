@@ -28,7 +28,7 @@ struct xyzData{
 
 struct dataPoint { 
   struct xyzData acc;   // m/s^2  //might be able to get higher resolution by raw data instead
-  struct xyzData gyro;  // rad/s
+  struct xyzData gyro;  // degrees/s
   float prs;            // Pa
   float tmp;            // C
 };

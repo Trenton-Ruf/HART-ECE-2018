@@ -52,7 +52,7 @@ char * setup_sd(File *logfile){
 void log_dataPoint(File * logfile, char * filename, dataPoint * store_dataPoint, int *flushtime){
 
   *flushtime += sizeof(dataPoint); // Add number of bytes of dataPoint to flushtime
-    if(*flushtime > 512){ // flush stores 512 bytes. dataPoint struct is 60 bytes. 512/60=8.53
+    if(*flushtime > 511){ // flush stores 512 bytes. dataPoint struct is 60 bytes. 512/60=8.53
       logfile->flush();  
       *flushtime = sizeof(dataPoint);
     }
@@ -67,10 +67,25 @@ void log_dataPoint(File * logfile, char * filename, dataPoint * store_dataPoint,
     //logfile.close();
 }
 void log_gpsData(File * logfile, char * filename, gpsData * store_gpsData, int *flushtime){
+  if(sd_print){
+    Serial.println("logging GPS Data");
+    Serial.print("Flushtime before: ");
+    Serial.println(*flushtime);
+  }
 
   *flushtime += sizeof(gpsData); // Add number of bytes of gpsData to flushtime
-    if(*flushtime > 512){ // flush stores 512 bytes. gpsData struct is 60 bytes. 512/60=8.53
-      logfile->flush();  
+    if(*flushtime > 511){ // flush stores 512 bytes. gpsData struct is 60 bytes. 512/60=8.53
+      if(sd_print){
+        Serial.print("Flushtime after: ");
+        Serial.println(*flushtime);
+      }
+      if(sd_print){
+        Serial.println("Flushing to SD card");
+      }
+      logfile->flush(); 
+      if(sd_print){
+        Serial.println("Flushed to SD card");
+      }
       *flushtime = sizeof(gpsData);
     }
   //logfile = SD.open(filename, O_CREAT | O_WRITE | O_APPEND );
@@ -79,6 +94,9 @@ void log_gpsData(File * logfile, char * filename, gpsData * store_gpsData, int *
     Serial.println(filename);
   }
   else{
+    if(sd_print){
+      Serial.println("Writing to logfile");
+    }
     logfile->write((const uint8_t *)store_gpsData, sizeof(*store_gpsData));
   }
     //logfile.close();
@@ -87,7 +105,7 @@ void log_gpsData(File * logfile, char * filename, gpsData * store_gpsData, int *
 void log_basic(File * logfile, char * filename, basic * store_basic, int *flushtime){
 
   *flushtime += sizeof(basic); // Add number of bytes of dataPoint to flushtime
-    if(*flushtime > 512){ // flush stores 512 bytes. dataPoint struct is 60 bytes. 512/60=8.53
+    if(*flushtime > 511){ // flush stores 512 bytes. dataPoint struct is 60 bytes. 512/60=8.53
       logfile->flush();  
       *flushtime = sizeof(basic);
     }

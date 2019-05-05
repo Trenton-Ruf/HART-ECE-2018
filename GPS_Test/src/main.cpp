@@ -3,6 +3,10 @@
 #include <wiring_private.h>
 #include <variant.h>
 
+
+#define PMTK_SET_NMEA_FIX_1HZ  "$PMTK300,1000,0,0,0,0*1C"
+#define PMTK_SET_NMEA_FIX_5HZ  "$PMTK300,200,0,0,0,0*2F"
+#define PMTK_SET_NMEA_FIX_10HZ "$PMTK300,100,0,0,0,0*2"
 // Test code for Ultimate GPS Using Hardware Serial (e.g. GPS Flora or FeatherWing)
 //
 // This code shows how to listen to the GPS module via polling. Best used with
@@ -62,22 +66,34 @@ digitalWrite(GPS_Reset_Pin, HIGH);
   digitalWrite(13,LOW);
   //Uart Serial1( &sercom0, PIN_SERIAL1_RX, PIN_SERIAL1_TX, PAD_SERIAL1_RX, PAD_SERIAL1_TX ) ;
 
-  //while (!Serial);  // uncomment to have the sketch wait until Serial is ready
+  while (!Serial);  // uncomment to have the sketch wait until Serial is ready
   
   // connect at 115200 so we can read the GPS fast enough and echo without dropping chars
   // also spit it out
-  //Serial.begin(115200);
-  //Serial.println("Adafruit GPS library basic test!");
-     
+  Serial.begin(115200);
+  Serial.println("Adafruit GPS library basic test!");
+
+
+
+
   // 9600 NMEA is the default baud rate for Adafruit MTK GPS's- some use 4800
   GPS.begin(9600);
+  delay(100);
+  GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_OFF);
   // uncomment this line to turn on RMC (recommended minimum) and GGA (fix data) including altitude
-  GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+  GPS.sendCommand("$PMTK251,38400*27<CR><LF>"); // Change GPS baud to 38400 GPS.sendCommand("$PMTK251,57600*2C"); // Change GPS baud to 57600
+  //Serial1.end();
+  delay(1000);
+  GPS.begin(38400); // reconnect on new baud-rate
   // uncomment this line to turn on only the "minimum recommended" data
   //GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCONLY);
   // For parsing data, we don't suggest using anything but either RMC only or RMC+GGA since
   // the parser doesn't care about other sentences at this time
+  GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+  delay(100);
   // Set the update rate
+
+  //GPS.sendCommand(PMTK_SET_NMEA_FIX_5HZ); // Set GPS fix interval to 1,5, or 10hz
   GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); // 1 Hz update rate
   // For the parsing code to work nicely and have time to sort thru the data, and
   // print it out we don't suggest using anything higher than 1 Hz
@@ -93,7 +109,6 @@ digitalWrite(GPS_Reset_Pin, HIGH);
 
 void loop() // run over and over again
 {
-  
   // read data from the GPS in the 'main loop'
   char c = GPS.read();
   // if you want to debug, this is a good time to do it!
