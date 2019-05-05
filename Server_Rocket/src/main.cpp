@@ -14,8 +14,6 @@ RHReliableDatagram manager(rf69, SERVER_ADDRESS); //manages delivery and recipt
 
 #define EXTERNAL_LED PORT_PA15
  
-
-
 void setup() {
   /////////////////
   // Setup LED's //
