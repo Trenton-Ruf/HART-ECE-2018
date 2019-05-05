@@ -11,8 +11,6 @@
 
 #ifndef MYSENSORS_H_
 #define MYSENSORS_H_
-//int GPS_Enable_Pin = A0; // pll low to enable, 
-//int GPS_Reset_Pin = A1; // Reset if pulled low. Keep high otherwise.
 
 #define GPS_Enable_Pin  PORT_PA02 // A0 // pull low to enable, 
 #define GPS_Reset_Pin   PORT_PB08 // A1 // Reset if pulled low. Keep high otherwise.

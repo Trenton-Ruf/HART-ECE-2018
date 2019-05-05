@@ -1,7 +1,5 @@
 #include "MySensors.h"
 
-
-
 bool sensor_print = false; // set true to print to Serial (For debugging).
 
 void set_sensor_print(bool set_bool){
@@ -18,7 +16,7 @@ Adafruit_LIS3DH lis = Adafruit_LIS3DH();
 void setup_accelerometer(void) {
 
   if(sensor_print)
-    Serial.println("LIS3DH test!");
+  Serial.println("LIS3DH test!");
   
   if (! lis.begin(0x18)) {   // change this to 0x19 for alternative i2c address
     if(sensor_print)
@@ -28,9 +26,7 @@ void setup_accelerometer(void) {
 
   if(sensor_print){
     Serial.println("LIS3DH found!");
-    
     lis.setRange(LIS3DH_RANGE_16_G);   // 2, 4, 8 or 16 G!
-    
     Serial.print("Range = "); Serial.print(2 << lis.getRange());  
     Serial.println("G");
   }
@@ -188,7 +184,6 @@ void setup_gps(Adafruit_GPS * GPS){
   delay(1000);
   digitalWrite(A1,HIGH);
   
-
 } 
 
 int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_code){
