@@ -67,6 +67,7 @@ void log_dataPoint(File * logfile, char * filename, dataPoint * store_dataPoint,
     //logfile.close();
 }
 void log_gpsData(File * logfile, char * filename, gpsData * store_gpsData, int *flushtime){
+  delay(5);
   if(sd_print){
     Serial.println("logging GPS Data");
     Serial.print("Flushtime before: ");

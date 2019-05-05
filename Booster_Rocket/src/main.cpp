@@ -139,6 +139,7 @@ void loop() {
   memcpy(tx_buf, &time_code, sizeof(time_code));
   memcpy(&tx_buf[sizeof(time_code)], &data_gps, sizeof(data_gps) );
 
+  delay(10);
   /// Log Time and Gps Data //
   if(main_print){
     Serial.print("starting GPS log\n");
@@ -154,8 +155,11 @@ void loop() {
     ///////////////////////////
     //   Gather Sensor Data  //
     ///////////////////////////
+    GPS.read();
     gather_accelerometer(&data_telemetry);
+    GPS.read();
     gather_gyroscope(&data_telemetry);
+    GPS.read();
     gather_barometer(&data_telemetry);
 
     GPS.read();
@@ -165,9 +169,12 @@ void loop() {
     memcpy(tx_buf, &time_code, sizeof(time_code));
     memcpy(&tx_buf[sizeof(time_code)], &data_telemetry, sizeof(data_telemetry) );
 
+    GPS.read();
     /// Log Time and Sensor Data //
     log_basic(&logfile, filename,&time_code,&flushtime);
     log_dataPoint(&logfile, filename,&data_telemetry,&flushtime);
+
+    GPS.read();
   }
 
 
@@ -179,7 +186,7 @@ void loop() {
   if(main_print){
    Serial.print("Start Data Transmission\n");
   }
-  
+  delay(5); 
   manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
 
   if(main_print){

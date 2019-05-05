@@ -193,7 +193,7 @@ void setup_gps(Adafruit_GPS * GPS){
 
 int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_code){
   GPS->read();
-
+  
   if (GPS->newNMEAreceived()) {
     if(sensor_print){
         Serial.println("Printing NMEA");
