@@ -17,8 +17,7 @@ serial_example.c // just an example of implementation
 Example: "read_sd_card ECELOGXX.TXT > ECELOGXX.cvs"
 
 The reason this process is necissary is because writing ASCII directly to the .TXT file was taking too long while logging telemetry data to the microSD card. Therefore I decreased the amount of data to be written by storing raw binary.   
-**caution**
-
+**caution : **
 In order for the "read_sd_card" program to report accurate values make sure the endianess of the machine you are running it on is the same as what an ARM cortex m0 uses. Also make sure that data types have the same sizes. 
 
 
