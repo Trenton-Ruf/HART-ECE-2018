@@ -16,10 +16,9 @@ serial_example.c // just an example of implementation
 3.) run "read_sd_card" with the logfile as a parameter and redirect stdout to a .cvs file.  <br />
 Example: "read_sd_card ECELOGXX.TXT > ECELOGXX.cvs"
 
-The reason this process is necissary is because writing ASCII directly to the .TXT file was taking too long while logging telemetry data to the microSD card. Therefore I decreased the amount of data to be written by storing raw binary. 
-**caution**
-In order for the "read_sd_card" program to report accurate values make sure the endianess of the machine you are running it on is the same as what an ARM cortex m0 uses. Also make sure that data types have the same sizes. <br />   
-
+The reason this process is necissary is because writing ASCII directly to the .TXT file was taking too long while logging telemetry data to the microSD card. Therefore I decreased the amount of data to be written by storing raw binary. <br />   
+**caution**<br />   
+In order for the "read_sd_card" program to report accurate values make sure the endianess of the machine you are running it on is the same as what an ARM cortex m0 uses. Also make sure that data types have the same sizes. 
 
 
 PlatformIO plugin for VScode was used to upload code to the microcontroller.<br />
