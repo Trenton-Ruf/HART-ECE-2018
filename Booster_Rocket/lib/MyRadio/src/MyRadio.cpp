@@ -6,6 +6,10 @@ int RADIO_ADDRESS;
 
 //ADDRESS 1 if booster, 2 if sustainer, 3 if ground station
 void  setup_radio(RH_RF69 *rf69,  RHReliableDatagram *manager ,int ADDRESS){
+
+  rf69->setModemConfig(RH_RF69::FSK_Rb2Fd5); // Allows for non-defualt configurations. I'm using it to decrease baud rate. Possible pre-sets found in link below.
+  // http://www.airspayce.com/mikem/arduino/RadioHead/classRH__RF69.html#a8b7db5c6e4eb542f46fec351b2084bbe
+
   RADIO_ADDRESS = ADDRESS;
 
   // Reset radio

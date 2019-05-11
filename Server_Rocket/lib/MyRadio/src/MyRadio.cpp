@@ -8,6 +8,9 @@ int RADIO_ADDRESS;
 void  setup_radio(RH_RF69 *rf69,  RHReliableDatagram *manager ,int ADDRESS){
   RADIO_ADDRESS = ADDRESS;
 
+  rf69->setModemConfig(RH_RF69::FSK_Rb2Fd5); // Allows for non-defualt configurations. I'm using it to decrease baud rate. Possible pre-sets found in link below.
+  // http://www.airspayce.com/mikem/arduino/RadioHead/classRH__RF69.html#a8b7db5c6e4eb542f46fec351b2084bbe
+
   // Reset radio
   REG_PORT_DIR0 |= RFM69_RST;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
   REG_PORT_OUTCLR0 |= RFM69_RST; // Set port low
