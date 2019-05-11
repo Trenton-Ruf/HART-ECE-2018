@@ -182,9 +182,9 @@ void loop() {
    Serial.print("Start Data Transmission\n");
   }
   delay(5); // Need delay to complete GPS read before transmitting data
-  //Dissable timer interupts
+  //NVIC_DisableIRQ(TC3_IRQn); //Dissable timer interupts
   manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
-  //Enable timer interupts
+  //NVIC_EnableIRQ(TC3_IRQn); //Enable timer interupts
   if(main_print){
    Serial.print("END Data Transmission\n");
   }
