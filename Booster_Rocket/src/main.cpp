@@ -3,6 +3,7 @@
 #include <SPI.h>
 #include <MyRadio.h>
 #include <MySD.h>
+#include <MyTimer.h>
 
 //#include <samd21g18a.h>
 
@@ -23,7 +24,6 @@ int flushtime = 0;
 #define GPSSerial Serial1
 Adafruit_GPS GPS(&GPSSerial);
 
-
 // STRUCTS //
 dataPoint data_telemetry; // acc,gyro,prs,tmpr
 gpsData data_gps; // GPS
@@ -31,6 +31,18 @@ basic time_code; // time (ms), code
 
 byte tx_buf[60];
 int size_tx;
+
+// A timer handler that is called at the frequency declared in startTimer(int frequency)
+void TC3_Handler() {
+  TcCount16* TC = (TcCount16*) TC3;
+  // If this interrupt is due to the compare register matching the timer count
+  // we Read the GPS.
+  if (TC->INTFLAG.bit.MC0 == 1) {
+    TC->INTFLAG.bit.MC0 = 1;
+    // Write callback here!!!
+    GPS.read(); 
+  }
+}
 
 void setup() {
 
@@ -100,11 +112,15 @@ void setup() {
     Serial.println("Radio AV Board test");
     Serial.println();
   }
+
+  startTimer(1000); 
+  // calls TC3_Handler() every millisecond
+  // Make sure to dissable the interupt during time critical applications
+  // Such as transmitting
 }
 
 
 void loop() {
-
 
   time_code.time = millis(); // get time in milliseconds
   if(main_print){
@@ -144,28 +160,19 @@ void loop() {
     // Will move to interupt driven method.
     // GPS.read() is recommended to be called every 1ms
 
-    GPS.read();
     gather_accelerometer(&data_telemetry);
-    GPS.read();
     gather_gyroscope(&data_telemetry);
-    GPS.read();
     gather_barometer(&data_telemetry);
-    GPS.read();
 
     time_code.code &= ~(1 << 0);
     size_tx = sizeof(time_code) + sizeof(data_telemetry);
     memcpy(tx_buf, &time_code, sizeof(time_code));
     memcpy(&tx_buf[sizeof(time_code)], &data_telemetry, sizeof(data_telemetry) );
 
-    GPS.read();
     /// Log Time and Sensor Data //
     log_basic(&logfile, filename,&time_code,&flushtime);
     log_dataPoint(&logfile, filename,&data_telemetry,&flushtime);
-
-    GPS.read();
   }
-
-
 
   //////////////////////////
   // Send Data over Radio //
@@ -175,8 +182,9 @@ void loop() {
    Serial.print("Start Data Transmission\n");
   }
   delay(5); // Need delay to complete GPS read before transmitting data
+  //Dissable timer interupts
   manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
-
+  //Enable timer interupts
   if(main_print){
    Serial.print("END Data Transmission\n");
   }
