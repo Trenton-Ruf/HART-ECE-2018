@@ -12,7 +12,7 @@ int terminal_left = 19;
 int terminal_middle = 18;
 int terminal_right = 17;
 
-bool main_print = true; // true print to USB Serial //for debugging
+bool main_print = false; // true print to USB Serial //for debugging
 int ADDRESS = BOOSTER_ADDRESS; //change to SUSTAINER_ADDRESS if in sustainer
 
 RH_RF69 rf69(RFM69_CS, RFM69_INT); // instantiate radio driver

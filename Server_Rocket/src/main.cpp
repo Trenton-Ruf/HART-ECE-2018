@@ -3,7 +3,7 @@
 #include <MyRadio.h>
 
 
-bool print_main = true; // set true for debugging
+bool print_main = false; // set true for debugging
 
 dataPoint data_telemetry;
 gpsData data_gps;
@@ -98,7 +98,7 @@ void loop() {
       }
 
       if(! print_main){
-        //Serial.write(rx_buf,60); //write to Serial without parsing
+        Serial.write(rx_buf,60); //write to Serial without parsing
       }
     }
   }
