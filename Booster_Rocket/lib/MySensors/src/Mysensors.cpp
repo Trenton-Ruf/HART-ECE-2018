@@ -1,4 +1,4 @@
-#include "MySensors.h"
+#include <MySensors.h>
 
 bool sensor_print = false; // set true to print to Serial (For debugging).
 
@@ -22,6 +22,7 @@ void setup_accelerometer(void) {
     if(sensor_print)
       Serial.println("Couldnt start");
     //ERROR
+    error_blink(1, LED_G);
   }
 
   if(sensor_print){
@@ -90,6 +91,7 @@ void setup_gyroscope(void)
     if(sensor_print){
       Serial.println("L3GD20, not detected.");
       //maybe blink ERROR
+    error_blink(2, LED_G);
     }
   }
 
@@ -133,6 +135,7 @@ void setup_barometer(void) {
     if(sensor_print){
       Serial.println("Error connecting...");
       //maybe ERROR blink
+      error_blink(3, LED_G);
     }
     setup();
   }
@@ -161,7 +164,7 @@ uint32_t gps_time_interval = 2000; // set to twice NMEA_UPDATE period
 
 void setup_gps(Adafruit_GPS * GPS){
   if(sensor_print){
-    Serial.println("GPS Test");
+    Serial.println("GPS Setup");
   }
 
   GPS->begin(9600); // set default baud rate.
@@ -187,7 +190,7 @@ void setup_gps(Adafruit_GPS * GPS){
 } 
 
 int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_code){
-  GPS->read();
+  //GPS->read();
   
   if (GPS->newNMEAreceived()) {
     if(sensor_print){
