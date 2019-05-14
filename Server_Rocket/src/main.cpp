@@ -12,7 +12,6 @@ basic time_code;
 RH_RF69 rf69(RFM69_CS, RFM69_INT); // instantiate radio driver
 RHReliableDatagram manager(rf69, SERVER_ADDRESS); //manages delivery and recipt
 
-#define EXTERNAL_LED PORT_PA15
  
 void setup() {
   /////////////////
@@ -26,14 +25,18 @@ void setup() {
   REG_PORT_DIR0 |= LED_G;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA06;" also works
   REG_PORT_OUTCLR0= LED_G; // Set port low
   //red enclousure LED  on through setup
-  REG_PORT_DIR0 |= EXTERNAL_LED;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA06;" also works
-  REG_PORT_OUTSET0= EXTERNAL_LED; // Set port high
+  REG_PORT_DIR0 |= EXTERNAL_LED;  // Set port to output, 
   //  Group[0] is port A
   //  Group[1] is port B
 
   // Set up serial monitor
   Serial.begin(115200);
-  while (!Serial); //Wait for USB connection
+  while (!Serial){//Wait for USB connection
+    REG_PORT_OUTSET0= EXTERNAL_LED; // Set port high
+    delay(100);
+    REG_PORT_OUTCLR0 |= EXTERNAL_LED; // Set port low
+    delay(100);
+  } 
   if(print_main){
     Serial.println("Starting Serial");
   }
@@ -46,7 +49,6 @@ void setup() {
   }
 
   //Red enclousure LED off after setup
-  REG_PORT_OUTCLR0 |= EXTERNAL_LED; // Set port low
 }
 
 void loop() {

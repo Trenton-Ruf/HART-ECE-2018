@@ -56,6 +56,7 @@ struct basic{
 
 #define LED_R         PORT_PA17 //Red   LED Pin 13
 #define LED_G         PORT_PA06 //Green LED Pin 8
+#define EXTERNAL_LED PORT_PA15
 
 void error_blink(int pattern, int LED);
 
