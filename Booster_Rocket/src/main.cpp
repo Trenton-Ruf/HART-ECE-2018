@@ -13,14 +13,15 @@ int terminal_middle = 18;
 int terminal_right = 17;
 
 bool main_print = true; // true print to USB Serial //for debugging
+int ADDRESS = BOOSTER_ADDRESS; //change to SUSTAINER_ADDRESS if in sustainer
 
 RH_RF69 rf69(RFM69_CS, RFM69_INT); // instantiate radio driver
-RHReliableDatagram manager(rf69, BOOSTER_ADDRESS); //manages delivery and recipt
+RHReliableDatagram manager(rf69, ADDRESS); //manages delivery and recipt
 
 File logfile; //file descriptor
-char * filename; //name of file ECELOG--.txt , about 15bytes
+char * filename; //name of file ECELOG--.txt , about 12bytes
 int flushtime = 0;
-
+ 
 #define GPSSerial Serial1
 Adafruit_GPS GPS(&GPSSerial);
 
@@ -62,8 +63,8 @@ void setup() {
   REG_PORT_OUTSET1 |= GPS_Reset_Pin; // Set port High
   
   // Radio enable
-  REG_PORT_DIR0 |= RFM69_ENABLE; // Set port to output
-  REG_PORT_OUTSET0 |= RFM69_ENABLE; // Set port low
+  //REG_PORT_DIR0 |= RFM69_ENABLE; // Set port to output
+ // REG_PORT_OUTCLR0 |= RFM69_ENABLE; // Set port low
 
   //Setup LED's
   REG_PORT_DIR0 |= LED_R;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
@@ -113,7 +114,15 @@ void setup() {
     Serial.println();
   }
 
-  startTimer(1000); 
+  //Sets address in time_code.code bit 2 to be 0 for booster 1 for sustainer
+  if (ADDRESS == BOOSTER_ADDRESS){
+    time_code.code &= ~(1 << 2);
+  }
+  else{
+    time_code.code |= 1 << 2; 
+  }
+
+ // startTimer(1000); 
   // calls TC3_Handler() every millisecond
   // Make sure to dissable the interupt during time critical applications
   // Such as transmitting
