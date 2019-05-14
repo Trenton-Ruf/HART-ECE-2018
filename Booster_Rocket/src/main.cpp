@@ -54,6 +54,9 @@ void setup() {
   //  Group[0] is port A
   //  Group[1] is port B
 
+  //LEAVE THESE PORTS COMMENTED OUT FOR NOW, IT WORKS WITHOUT SETTING THEM.
+
+  /*
   //Setup GPS Pins
   REG_PORT_DIR0 |= GPS_Enable_Pin; // Set port to output
   REG_PORT_OUTCLR0 |= GPS_Enable_Pin; // Set port low
@@ -61,10 +64,11 @@ void setup() {
   //if changing gps refresh rate
   REG_PORT_DIR1 |= GPS_Reset_Pin; // Set port to output
   REG_PORT_OUTSET1 |= GPS_Reset_Pin; // Set port High
-  
-  // Radio enable
+  */
+
+  //Radio enable
   //REG_PORT_DIR0 |= RFM69_ENABLE; // Set port to output
- // REG_PORT_OUTCLR0 |= RFM69_ENABLE; // Set port low
+  //REG_PORT_OUTCLR0 |= RFM69_ENABLE; // Set port low
 
   //Setup LED's
   REG_PORT_DIR0 |= LED_R;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
@@ -122,7 +126,7 @@ void setup() {
     time_code.code |= 1 << 2; 
   }
 
- // startTimer(1000); 
+  startTimer(1000); 
   // calls TC3_Handler() every millisecond
   // Make sure to dissable the interupt during time critical applications
   // Such as transmitting
@@ -135,13 +139,12 @@ void loop() {
   if(main_print){
     Serial.print("Time: ");
     Serial.println(time_code.time);
-    
   }
 
   /////////////////////////
   //   Gather GPS Data   //
   /////////////////////////
-  
+
   if (gather_gps(&GPS, &data_gps,&time_code)){ // if return 1 send gps data
   time_code.code |= 1 << 0;
   size_tx = sizeof(time_code) + sizeof(data_gps);
@@ -164,10 +167,6 @@ void loop() {
     ///////////////////////////
     //   Gather Sensor Data  //
     ///////////////////////////
-
-    // Need multiple GPS.read() functions to complete a GPS datagram. 
-    // Will move to interupt driven method.
-    // GPS.read() is recommended to be called every 1ms
 
     gather_accelerometer(&data_telemetry);
     gather_gyroscope(&data_telemetry);
