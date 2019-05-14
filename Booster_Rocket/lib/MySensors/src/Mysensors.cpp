@@ -22,6 +22,7 @@ void setup_accelerometer(void) {
     if(sensor_print)
       Serial.println("Couldnt start");
     //ERROR
+    error_blink(1, LED_G);
   }
 
   if(sensor_print){
@@ -90,6 +91,7 @@ void setup_gyroscope(void)
     if(sensor_print){
       Serial.println("L3GD20, not detected.");
       //maybe blink ERROR
+    error_blink(2, LED_G);
     }
   }
 
@@ -133,6 +135,7 @@ void setup_barometer(void) {
     if(sensor_print){
       Serial.println("Error connecting...");
       //maybe ERROR blink
+      error_blink(3, LED_G);
     }
     setup();
   }

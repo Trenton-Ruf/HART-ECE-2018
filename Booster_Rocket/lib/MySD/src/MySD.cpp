@@ -14,9 +14,13 @@ char * setup_sd(File *logfile){
         if(sd_print){
             Serial.println("Card init. failed!");
         } 
-        error_blink(3, LED_R);
+        error_blink(1, LED_R);
     }
-    
+
+    if (SD.exists("/ECELOG99.TXT")) { //if The SD card is full
+      error_blink(2,LED_R);
+    }
+
     //Copied this code but modified the filename
     strcpy(filename, "/ECELOG00.TXT");
     for (uint8_t i = 0; i < 100; i++) {
@@ -35,7 +39,7 @@ char * setup_sd(File *logfile){
             Serial.print("Couldnt create "); 
             Serial.println(filename);
         }
-        error_blink(4, LED_R);
+        error_blink(3, LED_R);
     }
     if(sd_print){
         Serial.print("Writing to "); 
