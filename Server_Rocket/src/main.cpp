@@ -3,7 +3,7 @@
 #include <MyRadio.h>
 
 
-bool print_main = false; // set true for debugging
+bool print_main = true; // set true for debugging
 
 dataPoint data_telemetry;
 gpsData data_gps;
@@ -34,6 +34,9 @@ void setup() {
   // Set up serial monitor
   Serial.begin(115200);
   while (!Serial); //Wait for USB connection
+  if(print_main){
+    Serial.println("Starting Serial");
+  }
 
   // Setup radio as server
   setup_radio(&rf69,&manager,SERVER_ADDRESS);
@@ -43,7 +46,7 @@ void setup() {
   }
 
   //Red enclousure LED off after setup
-  REG_PORT_OUTSET0 |= EXTERNAL_LED; // Set port high
+  REG_PORT_OUTCLR0 |= EXTERNAL_LED; // Set port low
 }
 
 void loop() {
@@ -95,7 +98,7 @@ void loop() {
       }
 
       if(! print_main){
-        Serial.write(rx_buf,60); //write to Serial without parsing
+        //Serial.write(rx_buf,60); //write to Serial without parsing
       }
     }
   }
