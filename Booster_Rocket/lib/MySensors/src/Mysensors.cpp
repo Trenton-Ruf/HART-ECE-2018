@@ -51,8 +51,8 @@ void gather_accelerometer(struct dataPoint *telemetry) {
 
   // Map orientation of the accelerometer to how its mounted on the PCB
   // When mounted: Z-axis up, X-axis left, Y-axis out.
-  telemetry->acc.x = event.acceleration.x;
-  telemetry->acc.z = event.acceleration.y;
+  telemetry->acc.x = event.acceleration.y;
+  telemetry->acc.z = event.acceleration.x;
   telemetry->acc.y = -1 * event.acceleration.z;
 }
 
