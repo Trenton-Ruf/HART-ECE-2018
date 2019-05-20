@@ -7,6 +7,7 @@
 
 //#include <samd21g18a.h>
 
+#define VBATPIN 9
 //Mosfets gates, set high to Ignite.
 int terminal_left = 19;
 int terminal_middle = 18;
@@ -163,6 +164,19 @@ void arming(){
   }
 }
 
+void gather_battery(){
+  //code from
+  //https://learn.adafruit.com/adafruit-feather-32u4-adalogger/power-management
+  float measuredvbat = analogRead(VBATPIN);
+  measuredvbat *= 2;    // we divided by 2, so multiply back
+  measuredvbat *= 3.3;  // Multiply by 3.3V, our reference voltage
+  measuredvbat /= 1024; // convert to voltage
+  //Set time.code last bits to measuredvbat
+  measuredvbat -= 3;
+  int codeBat = measuredvbat*100;
+  time_code.code &= ~0xFF00; // clears battery value
+  time_code.code |= codeBat & 0xFF00; // sets new battery value 
+}
 
 void send_telemetry() {
 
@@ -233,6 +247,11 @@ void send_telemetry() {
 
 void loop(){
   if (current_state == UNARMED){
+    gather_battery();
+    size_tx = sizeof(time_code); 
+    memcpy(tx_buf, &time_code, sizeof(time_code));
+    manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS); //send just time.code
+
     arming();
   }
   else if(current_state == ARMED){

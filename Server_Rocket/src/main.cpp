@@ -4,6 +4,10 @@
 
 
 bool print_main = false; // set true for debugging
+int batterySustainer;
+int rssiSustainer;
+int batteryBooster;
+int rssiBooster;
 
 dataPoint data_telemetry;
 gpsData data_gps;
@@ -16,14 +20,17 @@ RHReliableDatagram manager(rf69, SERVER_ADDRESS); //manages delivery and recipt
 // Setup State Machine //
 /////////////////////////
 typedef enum {
-  UNARMED,
+  IDLE,
+  ARMING,
   ARMED
 } launch_state;
-launch_state current_state = UNARMED;
+launch_state current_state = IDLE;
 
 //bools for booster and sustainer arming state
 bool armed_B = false;
 bool armed_S = false;
+
+int arming_switch = 20; // pin for arming switch
  
 void setup() {
   /////////////////
@@ -60,9 +67,13 @@ void setup() {
     Serial.println("\n\nRadio Ground Station test\n\n");
   }
 
+// If the Base Station subsystem is powered on with the arming switch already flipped 
+  if(digitalRead(arming_switch)){
+    //Beep for 3 seconds
+    current_state == ARMED; //Skip to the ARMED state
+  }
 }
 
-int arming_switch = 20; // pin for arming switch
 
 void arming(){
   if (digitalRead(arming_switch)){ // if arming switch is flipped
@@ -74,6 +85,16 @@ void arming(){
     if(armed_B & armed_S) // if both Avionics Bays are armed change states
     current_state = ARMED;
   }
+  else{
+    current_state = IDLE;
+  }
+}
+
+bool is_sustainer(){
+  if((time_code.code & (1 << 2)))
+  return true;
+  else
+  return false;
 }
 
 void recieve_telemetry() {
@@ -95,7 +116,7 @@ void recieve_telemetry() {
       }
       //(time_code.code >> 1 )) & 0x01); // >> <number> is bit that I want
       if((time_code.code & (1 << 1))){ // if GPS has fix
-        if((time_code.code & (1 << 2))){ // if sustainer
+        if(is_sustainer()){ // if sustainer
           //Turn on an LED
           REG_PORT_OUTSET0 |= LED_R; 
         } 
@@ -132,8 +153,57 @@ void recieve_telemetry() {
   }
 }
 
+void idling(){
+  byte rx_buf[60] = {0};
+
+  if (manager.available()){
+    // Wait for a message addressed to us from the client
+    uint8_t len = sizeof(rx_buf);
+    uint8_t from;
+    //recvfromack
+    if (manager.recvfrom(rx_buf, &len, &from)) {
+      memcpy(&time_code, rx_buf, sizeof(time_code));// dont need this step if only sending over serial, if no onboard computation
+      if(print_main){
+        Serial.print("time: ");
+        Serial.println(time_code.time);
+        Serial.print("code: ");
+        Serial.println(time_code.code);
+      }
+      if(is_sustainer()){
+        // Check if Armed?
+        // Check Battery
+        batterySustainer = time_code.code & 0xFF00;
+        batterySustainer = batterySustainer + 3;
+        // Check rssi
+        rssiSustainer = rf69.lastRssi();
+        if(print_main){
+          Serial.print("Sustainer RSSI: "); Serial.println(rssiSustainer);
+          Serial.print("Sustainer battery: "); Serial.println(batterySustainer);
+        }
+      }
+      else{
+        // Check if Armed?
+        // Check Battery
+        batteryBooster = time_code.code & 0xFF00;
+        batteryBooster = batteryBooster + 3;
+        // Check rssi
+        rssiBooster = rf69.lastRssi();
+        if(print_main){
+          Serial.print("Booster RSSI: "); Serial.println(rssiBooster);
+          Serial.print("Booster battery: "); Serial.println(batteryBooster);
+        }
+      }
+    }
+  }
+}
+
+
 void loop(){
-  if (current_state == UNARMED){
+  if (current_state == IDLE){
+    // Recieve only time.code
+    idling();
+  }
+  else if (current_state == ARMING){
     arming(); //continuously try arming booster and sustainer
   }
   else if (current_state == ARMED){
