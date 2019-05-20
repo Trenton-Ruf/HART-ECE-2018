@@ -65,10 +65,15 @@ void setup() {
 int arming_switch = 20; // pin for arming switch
 
 void arming(){
-  if (digitalRead(arming_switch)){
-    
-  } // if arming switch is flipped
-  
+  if (digitalRead(arming_switch)){ // if arming switch is flipped
+    if(! armed_B)
+    send_arming(&manager,BOOSTER_ADDRESS); // arm the booster
+    if(! armed_S)
+    send_arming(&manager,SUSTAINER_ADDRESS); // arm the sustainer
+
+    if(armed_B & armed_S) // if both Avionics Bays are armed change states
+    current_state = ARMED;
+  }
 }
 
 void recieve_telemetry() {

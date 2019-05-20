@@ -58,7 +58,7 @@ int recieve_arming(RHReliableDatagram *manager) {
     uint8_t len = sizeof(buf);
     uint8_t from;
 
-    if (manager->recvfromAck(buf, &len, &from)){ // recieve from ground station will wait forever instead consider recvFromAckTimout
+    if (manager->recvfromAckTimeout(buf, &len, 5000, &from)){
       if (radio_print){
         Serial.print("got request from : 0x");
         Serial.print(from, HEX);

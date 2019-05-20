@@ -20,3 +20,4 @@
 #endif
 
 void  setup_radio(RH_RF69 *rf69,  RHReliableDatagram *manager ,int ADDRESS);
+int send_arming(RHReliableDatagram *manager, int ADDRESS);
