@@ -93,6 +93,7 @@ void recieve_telemetry() {
         Serial.print("code: ");
         Serial.println(time_code.code);
       }
+      //(time_code.code >> 1 )) & 0x01); // >> <number> is bit that I want
       if((time_code.code & (1 << 1))){ // if GPS has fix
         if((time_code.code & (1 << 2))){ // if sustainer
           //Turn on an LED
