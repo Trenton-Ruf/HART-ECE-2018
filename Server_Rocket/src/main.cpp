@@ -12,6 +12,18 @@ basic time_code;
 RH_RF69 rf69(RFM69_CS, RFM69_INT); // instantiate radio driver
 RHReliableDatagram manager(rf69, SERVER_ADDRESS); //manages delivery and recipt
 
+/////////////////////////
+// Setup State Machine //
+/////////////////////////
+typedef enum {
+  UNARMED,
+  ARMED
+} launch_state;
+launch_state current_state = UNARMED;
+
+//bools for booster and sustainer arming state
+bool armed_B = false;
+bool armed_S = false;
  
 void setup() {
   /////////////////
@@ -48,10 +60,18 @@ void setup() {
     Serial.println("\n\nRadio Ground Station test\n\n");
   }
 
-  //Red enclousure LED off after setup
 }
 
-void loop() {
+int arming_switch = 20; // pin for arming switch
+
+void arming(){
+  if (digitalRead(arming_switch)){
+    
+  } // if arming switch is flipped
+  
+}
+
+void recieve_telemetry() {
 
   byte rx_buf[60] = {0};
 
@@ -106,7 +126,15 @@ void loop() {
   }
 }
 
+void loop(){
+  if (current_state == UNARMED){
 
+  }
+  else if (current_state == ARMED){
+    if(print_main)
+    Serial.println("Armed");
+  }
+}
 
 
 //altitude = 44330 * (1.0 - pow((pressure / 100) / 1013.25, 0.1903));

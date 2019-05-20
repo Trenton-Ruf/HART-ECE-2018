@@ -46,5 +46,37 @@ void  setup_radio(RH_RF69 *rf69,  RHReliableDatagram *manager ,int ADDRESS){
   }
 }
 
+// returns 1 if ADDRESS is armed
+// returns 0 if ADDRESS failed to arm
+// returns -1 if Sending failed (ADDRESS is unavaliable)
+int send_arming(RHReliableDatagram *manager, int ADDRESS) {
+
+  uint8_t buf[RH_RF69_MAX_MESSAGE_LEN];
+  uint8_t len = sizeof(buf);
+  uint8_t from;
+  char data[15];
+  strcpy(data,"arming");
+  bool armed = false;
+
+ if (!manager->sendtoWait((uint8_t *)data, strlen(data), ADDRESS)){
+    Serial.println("sendtoWait failed");
+    return -1;
+  }
+
+  if (manager->recvfromAck(buf, &len, &from)){ // recieve from ground station will wait forever instead consider recvFromAckTimout
+    if (radio_print){
+      Serial.print("got request from : 0x");
+      Serial.print(from, HEX);
+      Serial.print(": ");
+      Serial.println((char*)buf);
+    }
+  }
+
+  if(strstr((char*)buf, "success")){ // if the recieved message is "launch"
+    armed = true;
+  }
+
+  return armed;
+}
 
 

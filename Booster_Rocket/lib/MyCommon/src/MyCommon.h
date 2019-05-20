@@ -45,8 +45,8 @@ struct basic{
   // bit 2 -> Address -> 0 if booster, 1 if sustainer
   // bit 3 -> event 0 -> 1 if launch happened
   // bit 4 -> event 1 -> 1 if separation/sustainer happened
-  // bit 5 -> event 2 -> 1 if drouge shoot happened
-  // bit 6 -> event 3 -> 1 if main shoot happened
+  // bit 5 -> event 2 -> 1 if drouge chute happened
+  // bit 6 -> event 3 -> 1 if main chute happened
   // bit 7 -> 1 if sending battery info // maybe implement
 
   // INT IS 16 BITS YOU CAN ADD MORE CODES

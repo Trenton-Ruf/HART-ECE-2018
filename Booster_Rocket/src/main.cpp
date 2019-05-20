@@ -45,6 +45,16 @@ void TC3_Handler() {
   }
 }
 
+/////////////////////////
+// Setup State Machine //
+/////////////////////////
+typedef enum {
+  UNARMED,
+  ARMED,
+  LAUNCHED
+} launch_state;
+launch_state current_state = UNARMED;
+
 void setup() {
 
   /////////////////////
@@ -126,14 +136,37 @@ void setup() {
     time_code.code |= 1 << 2; 
   }
 
-  startTimer(1000); 
+  //startTimer(1000); 
   // calls TC3_Handler() every millisecond
   // Make sure to dissable the interupt during time critical applications
   // Such as transmitting
+  
+  gps_disable(); // Set gps to low power before arming
 }
 
 
-void loop() {
+void arming(){
+  // SLEEP //
+  if (! rf69.sleep()){ // Put Radio to sleep
+    if(main_print)
+      Serial.println("Failed to put Radio to sleep");
+  }
+
+  // WAIT FOR 1 MINUTE //change to microcontroller sleep instead of delay
+  delay(60000);
+
+  // WAKE //
+  //Check for arming signal
+  if (recieve_arming(&manager)){
+    current_state = ARMED;
+    // Set all sensors to high power 
+    gps_enable();
+  }
+}
+
+//void 
+
+void send_telemetry() {
 
   time_code.time = millis(); // get time in milliseconds
   if(main_print){
@@ -200,5 +233,13 @@ void loop() {
 
 }
 
-
+void loop(){
+  if (current_state == UNARMED){
+    arming();
+  }
+  else if(current_state == ARMED){
+    if(main_print)
+    Serial.println("ARMED");
+  }
+}
 

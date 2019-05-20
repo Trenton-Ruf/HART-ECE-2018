@@ -12,8 +12,9 @@
 #ifndef MYSENSORS_H_
 #define MYSENSORS_H_
 
-#define GPS_Enable_Pin  PORT_PA02 // A0 // pull low to enable, 
-#define GPS_Reset_Pin   PORT_PB08 // A1 // Reset if pulled low. Keep high otherwise.
+#define GPS_Enable_Pin  PORT_PA02 // A0 // 14 // pull low to enable, 
+#define GPS_Reset_Pin   PORT_PB08 // A1 // 15 // Reset if pulled low. Keep high otherwise.
+#define ACC_Interup_Pin 16        // A2 // PORT_PB09 
 
 #define PMTK_SET_NMEA_FIX_1HZ  "$PMTK300,1000,0,0,0,0*1C"
 #define PMTK_SET_NMEA_FIX_5HZ  "$PMTK300,200,0,0,0,0*2F"
@@ -32,3 +33,5 @@ void gather_accelerometer(struct dataPoint *telemetry);
 void gather_gyroscope(struct dataPoint *telemetry); 
 void gather_barometer(struct dataPoint *telemetry);
 int gather_gps(Adafruit_GPS *GPS, struct gpsData *gpsdata,struct basic *time_code);
+void gps_enable();
+void gps_disable();

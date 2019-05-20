@@ -46,5 +46,45 @@ void  setup_radio(RH_RF69 *rf69,  RHReliableDatagram *manager ,int ADDRESS){
   }
 }
 
+// Returns 1 if recieved and acknoledged arming signal
+int recieve_arming(RHReliableDatagram *manager) {
 
+  uint8_t buf[RH_RF69_MAX_MESSAGE_LEN];
+  char data[15];
+  bool armed = false;
 
+  if (manager->available()){
+    // Wait for a message addressed to us from the client
+    uint8_t len = sizeof(buf);
+    uint8_t from;
+
+    if (manager->recvfromAck(buf, &len, &from)){ // recieve from ground station will wait forever instead consider recvFromAckTimout
+      if (radio_print){
+        Serial.print("got request from : 0x");
+        Serial.print(from, HEX);
+        Serial.print(": ");
+        Serial.println((char*)buf);
+      }
+
+      //char* launch = "arming"; // maybe use strstr((char *)buf, "launch") instead
+      if(strstr((char*)buf, "arming")){ // if the recieved message is "launch"
+        strcpy(data,"success");
+        armed = true;
+      }
+      else{
+        if(radio_print)
+        Serial.print("Launch command not recieved");
+
+        strcpy(data, "failed");
+        armed = false;
+      }
+
+      // Send a reply back to the originator client
+      if (!manager->sendtoWait((uint8_t *)data, strlen(data), from)){
+        Serial.println("sendtoWait failed");
+        return -1;
+      }
+    }
+  }
+  return armed;
+}

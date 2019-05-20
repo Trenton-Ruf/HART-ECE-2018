@@ -22,3 +22,4 @@
 void  setup_radio(RH_RF69 *rf69,  RHReliableDatagram *manager ,int ADDRESS);
 void sendTelemetry(RH_RF69 *rf69,  RHReliableDatagram *manager ,struct dataPoint *telemetry);
 void recieveTelemetry(RH_RF69 *rf69,  RHReliableDatagram *manager, struct dataPoint *telemetry);
+int recieve_arming(RHReliableDatagram *manager); 

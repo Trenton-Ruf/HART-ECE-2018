@@ -247,3 +247,10 @@ int gather_gps(Adafruit_GPS * GPS, struct gpsData *gpsdata,struct basic *time_co
   return 0; 
 }
 
+void gps_disable(){
+  digitalWrite(GPS_Enable_Pin,HIGH);// Pull Enable pin High
+}
+
+void gps_enable(){
+  digitalWrite(GPS_Enable_Pin,LOW);// Pull Enable pin LOW
+}
