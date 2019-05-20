@@ -133,7 +133,7 @@ void recieve_telemetry() {
 
 void loop(){
   if (current_state == UNARMED){
-
+    arming(); //continuously try arming booster and sustainer
   }
   else if (current_state == ARMED){
     if(print_main)
