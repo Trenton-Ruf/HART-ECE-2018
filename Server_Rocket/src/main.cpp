@@ -90,6 +90,7 @@ void arming(){
   }
 }
 
+// returns true if the latest time_code recieved was from the sustainer
 bool is_sustainer(){
   if((time_code.code & (1 << 2)))
   return true;
@@ -181,7 +182,7 @@ void idling(){
           Serial.print("Sustainer battery: "); Serial.println(batterySustainer);
         }
       }
-      else{
+      else{// is booster
         // Check if Armed?
         // Check Battery
         batteryBooster = time_code.code & 0xFF00;
@@ -200,7 +201,7 @@ void idling(){
 
 void loop(){
   if (current_state == IDLE){
-    // Recieve only time.code
+    // Recieve only time_code
     idling();
   }
   else if (current_state == ARMING){
