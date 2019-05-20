@@ -163,7 +163,6 @@ void arming(){
   }
 }
 
-//void 
 
 void send_telemetry() {
 
