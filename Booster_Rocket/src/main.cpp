@@ -78,7 +78,7 @@ void setup() {
 
   //Radio enable
   //REG_PORT_DIR0 |= RFM69_ENABLE; // Set port to output
-  //REG_PORT_OUTCLR0 |= RFM69_ENABLE; // Set port low
+  //REG_PORT_OUTCLR0 |= RFM69_ENABLE; // Set port low //wait... maybe high lmao
 
   //Setup LED's
   REG_PORT_DIR0 |= LED_R;  // Set port to output, "PORT->Group[0].DIRSET.reg = PORT_PA17;" also works
@@ -104,7 +104,6 @@ void setup() {
       Serial.println("Starting AV board test");
     }
   }
-
   //////////////////////
   // Initialize Radio //
   //////////////////////
