@@ -182,7 +182,7 @@ void send_telemetry() {
   memcpy(tx_buf, &time_code, sizeof(time_code));
   memcpy(&tx_buf[sizeof(time_code)], &data_gps, sizeof(data_gps) );
 
-  delay(1);
+  delay(5);
   /// Log Time and Gps Data //
   if(main_print){
     Serial.print("starting GPS log\n");
@@ -221,7 +221,7 @@ void send_telemetry() {
    Serial.print("Start Data Transmission\n");
   }
 
-  delay(1); // Need delay to complete GPS read before transmitting data
+  delay(5); // Need delay to complete GPS read before transmitting data
   //NVIC_DisableIRQ(TC3_IRQn); //Dissable timer interupts
   manager.sendto((uint8_t *)&tx_buf, size_tx, SERVER_ADDRESS);
   //NVIC_EnableIRQ(TC3_IRQn); //Enable timer interupts
